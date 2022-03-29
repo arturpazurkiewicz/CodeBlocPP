@@ -14,3 +14,9 @@ MainView::~MainView()
 }
 
 
+
+void MainView::on_actionSave_triggered()
+{
+    qDebug() << "test";
+}
+
