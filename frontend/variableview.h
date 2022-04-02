@@ -6,7 +6,7 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class VariableView: public Ui_MainView {};}
+namespace Ui { class VariableView: public Ui_MainView {};};
 QT_END_NAMESPACE
 
 class VariableView: public QWidget

@@ -2,6 +2,7 @@
 #define MAINVIEW_H
 
 #include <QMainWindow>
+#include <frontend/dynamicvariable.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainView; }
@@ -16,8 +17,10 @@ public:
     ~MainView();
 
 
+
 private slots:
 
+    void getVariableData();
 
     void on_actionSave_triggered();
 
@@ -25,8 +28,14 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_addNewVariable_clicked();
+
+    void on_deleteVariable_clicked();
+
+    void on_saveVariable_clicked();
 
 private:
     Ui::MainView *ui;
+    QPushButton *selectedVariable;
 };
 #endif // MAINVIEW_H

@@ -53,8 +53,8 @@
        <widget class="QLabel" name="value_label">
         <property name="geometry">
          <rect>
-          <x>136</x>
-          <y>30</y>
+          <x>10</x>
+          <y>80</y>
           <width>60</width>
           <height>20</height>
          </rect>
@@ -78,8 +78,8 @@
        <widget class="QLabel" name="variable_label">
         <property name="geometry">
          <rect>
-          <x>29</x>
-          <y>30</y>
+          <x>20</x>
+          <y>50</y>
           <width>56</width>
           <height>20</height>
          </rect>
@@ -100,31 +100,72 @@
        <widget class="QPushButton" name="addNewVariable">
         <property name="geometry">
          <rect>
-          <x>40</x>
-          <y>0</y>
-          <width>141</width>
+          <x>10</x>
+          <y>10</y>
+          <width>51</width>
           <height>29</height>
          </rect>
         </property>
         <property name="text">
-         <string>ADD NEV VARIABLE</string>
+         <string>ADD</string>
         </property>
        </widget>
-       <widget class="QFrame" name="variables_frame">
+       <widget class="QPushButton" name="deleteVariable">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>10</y>
+          <width>93</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>DELETE</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="line_variable">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>50</y>
+          <width>113</width>
+          <height>21</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="line_value">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>80</y>
+          <width>113</width>
+          <height>21</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="saveVariable">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>110</y>
+          <width>93</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>SAVE</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="verticalLayoutWidget">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>60</y>
+          <y>140</y>
           <width>211</width>
-          <height>351</height>
+          <height>271</height>
          </rect>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
+        <layout class="QVBoxLayout" name="variables_area"/>
        </widget>
       </widget>
      </item>
