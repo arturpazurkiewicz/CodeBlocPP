@@ -26,6 +26,10 @@ set(PROJECT_SOURCES
         backend/compiler.cpp
         frontend/commandview.h
         frontend/commandview.cpp
+        frontend/variableview.h
+        frontend/variableview.cpp
+        frontend/outputview.h
+        frontend/outputview.cpp
         ${TS_FILES}
 )
 

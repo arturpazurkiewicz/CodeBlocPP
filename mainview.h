@@ -15,10 +15,16 @@ public:
     MainView(QWidget *parent = nullptr);
     ~MainView();
 
+
 private slots:
 
 
     void on_actionSave_triggered();
+
+    void on_actionLoad_triggered();
+
+    void on_actionAbout_triggered();
+
 
 private:
     Ui::MainView *ui;
