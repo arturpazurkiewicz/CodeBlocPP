@@ -13,7 +13,7 @@ OperationCommand::OperationCommand(void (*breakFunction)(bool), Variable *variab
 
 int OperationCommand::run(void (*outputFunction)(std::string), int currentLine) {
     variableOut->setValue(variable1->getValue());
-    operationOnLeft(*variableOut, *variable2, operation);
+    operationOnLeft(variableOut, variable2, operation);
     return currentLine + 1;
 }
 

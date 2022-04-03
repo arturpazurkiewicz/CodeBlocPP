@@ -16,7 +16,7 @@ enum Operation {
 class OperationCommand : public Command {
 public:
     OperationCommand(void (*breakFunction)(bool), Variable *variable1, Variable *variable2, Variable *variableOut,
-                     Operation operations);
+                     Operation operation);
 
     Variable *variable1;
     Variable *variable2;
@@ -31,13 +31,17 @@ template<class T>
 T operationOnLeft(T l, const T r, const Operation operation) {
     switch (operation) {
         case PLUS:
-            l += r;
+            *l += *r;
+            break;
         case MINUS:
-            l -= r;
+            *l -= *r;
+            break;
         case MULTIPLY:
-            l *= r;
+            *l *= *r;
+            break;
         case DIVIDE:
-            l /= r;
+            *l /= *r;
+            break;
     }
     return l;
 }
