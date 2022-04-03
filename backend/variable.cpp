@@ -28,29 +28,7 @@ void Variable::setValue(int value) {
     Variable::value = value;
 }
 
-bool Variable::operator==(const Variable &rhs) const {
-    return variable == rhs.variable;
-}
 
-bool Variable::operator!=(const Variable &rhs) const {
-    return !(*this == rhs);
-}
-
-bool Variable::operator<(const Variable &rhs) const {
-    return variable < rhs.variable;
-}
-
-bool Variable::operator>(const Variable &rhs) const {
-    return rhs < *this;
-}
-
-bool Variable::operator<=(const Variable &rhs) const {
-    return !(rhs < *this);
-}
-
-bool Variable::operator>=(const Variable &rhs) const {
-    return !(*this < rhs);
-}
 
 Variable Variable::operator+=(const Variable &rhs) {
     this->value += rhs.value;
@@ -70,4 +48,28 @@ Variable Variable::operator*=(const Variable &rhs) {
 Variable Variable::operator/=(const Variable &rhs) {
     this->value /= rhs.value;
     return *this;
+}
+
+bool Variable::operator==(const Variable &rhs) const {
+    return value == rhs.value;
+}
+
+bool Variable::operator!=(const Variable &rhs) const {
+    return !(rhs == *this);
+}
+
+bool Variable::operator<(const Variable &rhs) const {
+    return value < rhs.value;
+}
+
+bool Variable::operator>(const Variable &rhs) const {
+    return rhs < *this;
+}
+
+bool Variable::operator<=(const Variable &rhs) const {
+    return !(rhs < *this);
+}
+
+bool Variable::operator>=(const Variable &rhs) const {
+    return !(*this < rhs);
 }

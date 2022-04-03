@@ -9,7 +9,7 @@ IfCommand::IfCommand(void (*breakFunction)(bool), Variable *variable1, Variable 
                                              jumpTrue(jumpTrue), jumpFalse(jumpFalse), operation(operation) {}
 
 int IfCommand::run(void (*outputFunction)(std::string), int currentLine) {
-    if (compare(*variable1, *variable2, operation)) {
+    if (compare(variable1, variable2, operation)) {
         return jumpTrue;
     }
     return jumpFalse;

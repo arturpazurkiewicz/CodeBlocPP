@@ -12,8 +12,12 @@ OperationCommand::OperationCommand(void (*breakFunction)(bool), Variable *variab
                                                                                  operation(operation) {}
 
 int OperationCommand::run(void (*outputFunction)(std::string), int currentLine) {
-    variableOut->setValue(variable1->getValue());
-    operationOnLeft(variableOut, variable2, operation);
+    int oldValue = variable1->getValue();
+    operationOnLeft(variable1, variable2, operation);
+    if (variableOut != variable1){
+        variableOut->setValue(variable1->getValue());
+        variable1->setValue(oldValue);
+    }
     return currentLine + 1;
 }
 

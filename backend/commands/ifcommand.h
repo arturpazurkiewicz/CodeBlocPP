@@ -18,17 +18,17 @@ bool compare(const T l, const T r, const Comparator comparator) {
     bool result;
     switch (comparator) {
         case NEQ:
-            return l != r;
+            return *l != *r;
         case EQ:
-            return l == r;
+            return *l == *r;
         case LT:
-            return l > r;;
+            return *l > *r;
         case GT:
-            return l < r;
+            return *l < *r;
         case LE:
-            return l >= r;
+            return *l >= *r;
         case GE:
-            return l <= r;
+            return *l <= *r;
     }
     return false;
 }
