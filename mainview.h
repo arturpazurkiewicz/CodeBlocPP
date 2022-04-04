@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <frontend/dynamicvariable.h>
+#include <frontend/outputview.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainView; }
@@ -34,8 +35,13 @@ private slots:
 
     void on_saveVariable_clicked();
 
+    void on_runButton_clicked();
+
+    void on_clearButton_clicked();
+
 private:
     Ui::MainView *ui;
     QPushButton *selectedVariable;
+    OutputView *outputView;
 };
 #endif // MAINVIEW_H

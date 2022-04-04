@@ -192,7 +192,7 @@
        <widget class="QLabel" name="code_label">
         <property name="geometry">
          <rect>
-          <x>82</x>
+          <x>100</x>
           <y>20</y>
           <width>86</width>
           <height>20</height>
@@ -217,7 +217,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QFrame" name="actions">
+      <widget class="QFrame" name="actions_area">
        <property name="maximumSize">
         <size>
          <width>230</width>
@@ -260,6 +260,73 @@
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+       </widget>
+       <widget class="QPushButton" name="runButton">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>50</y>
+          <width>61</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>RUN</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="debugButton">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>300</y>
+          <width>61</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>DEBUG</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="nextButton">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>300</y>
+          <width>61</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>NEXT</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="clearButton">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>50</y>
+          <width>61</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>CLEAR</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="verticalLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>211</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="output_area">
+         <item>
+          <widget class="QPlainTextEdit" name="output_view"/>
+         </item>
+        </layout>
        </widget>
       </widget>
      </item>
