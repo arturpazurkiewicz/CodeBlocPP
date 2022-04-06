@@ -17,6 +17,7 @@ public:
 public slots:
 
 private:
+//       TODO should works on backends variable
     int variable = 0;
     int value = 0;// Local variable number of the button
 };
