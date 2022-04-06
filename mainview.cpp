@@ -11,6 +11,8 @@ MainView::MainView(QWidget *parent)
     ui->setupUi(this);
     QValidator *validator = new QIntValidator(100, 999, this);
     ui->line_value->setValidator(validator);
+    QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit*>(ui->output_area->itemAt(0)->widget());
+    optionsArea->setPlainText("CodeBloc++: \n");
 }
 
 MainView::~MainView()
@@ -79,5 +81,22 @@ void MainView::on_deleteVariable_clicked()
 void MainView::on_saveVariable_clicked()
 {
     selectedVariable->setText("Variable: " + ui->line_variable->text() + " Value: " + ui->line_value->text());
+}
+
+
+void MainView::on_runButton_clicked()
+{
+    QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit*>(ui->output_area->itemAt(0)->widget());
+
+    optionsArea->appendPlainText("run");
+
+}
+
+
+void MainView::on_clearButton_clicked()
+{
+    QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit*>(ui->output_area->itemAt(0)->widget());
+
+    optionsArea->setPlainText("CodeBloc++: \n");
 }
 
