@@ -4,9 +4,10 @@
 DynamicVariable::DynamicVariable(QWidget *parent) :
     QPushButton(parent)
 {
-    Variable++;
-    variable = Variable;
-    value = Value;
+    VariableCounter++;
+    variableCounter = VariableCounter;
+    myVariable->setVariable(std::to_string(VariableCounter));
+    myVariable->setStartValue(value);
 }
 
 DynamicVariable::~DynamicVariable()
@@ -14,18 +15,8 @@ DynamicVariable::~DynamicVariable()
 
 }
 
-int DynamicVariable::getVariable()
-{
-    return variable;
+Variable* DynamicVariable::getMyVariable(){
+    return myVariable;
 }
 
-int DynamicVariable::getValue()
-{
-    return value;
-}
-
-/* Initialize static class variable.
- * Static class variable must be initialized without fail
- * */
-int DynamicVariable::Variable = 0;
-int DynamicVariable::Value = 0;
+int DynamicVariable::VariableCounter = 0;

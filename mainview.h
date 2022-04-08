@@ -41,7 +41,7 @@ private slots:
 
 private:
     Ui::MainView *ui;
-    QPushButton *selectedVariable;
+    DynamicVariable *selectedVariable;
     OutputView *outputView;
 };
 #endif // MAINVIEW_H

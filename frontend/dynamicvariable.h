@@ -2,6 +2,8 @@
 #define DYNAMICVARIABLE_H
 
 #include <QPushButton>
+#include "./backend/variable.h"
+#include <QLocale>
 
 class DynamicVariable: public QPushButton
 {
@@ -9,17 +11,17 @@ class DynamicVariable: public QPushButton
 public:
     explicit DynamicVariable(QWidget *parent = nullptr);
        ~DynamicVariable();
-       static int Variable;
-       static int Value;// A static variable counter buttons rooms
-       int getVariable();
-       int getValue();
+       static int VariableCounter;
+      // int getVariable();
+      // int getValue();
+       Variable* getMyVariable();
 
 public slots:
 
 private:
-//       TODO should works on backends variable
-    int variable = 0;
-    int value = 0;// Local variable number of the button
+    int value = 0;
+    int variableCounter = 0;
+    Variable* myVariable = new Variable("", 0);
 };
 
 
