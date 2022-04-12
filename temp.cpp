@@ -48,10 +48,11 @@ int main(int argc, char *argv[]) {
     commands.push_back(c3);
     commands.push_back(c4);
     commands.push_back(c5);
+    commands.erase(commands.begin() + 1);
 
     std::set<int> breakpoints;
 
-    auto *compiler = new Compiler(commands,&breakpoints,NORMAL, &myCout);
+    auto *compiler = new Compiler(commands, &breakpoints, NORMAL, &myCout);
 
     qDebug() << compiler->run();
 

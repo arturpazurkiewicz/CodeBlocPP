@@ -41,6 +41,8 @@ set(PROJECT_SOURCES
         frontend/dynamicvariable.cpp
         frontend/outputview.h
         frontend/outputview.cpp
+
+
         ${TS_FILES}
         )
 

@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <frontend/dynamicvariable.h>
 #include <frontend/outputview.h>
-#include <set>
 
 
 QT_BEGIN_NAMESPACE
@@ -49,6 +48,6 @@ private:
     Ui::MainView *ui;
     DynamicVariable *selectedVariable;
     OutputView *outputView;
-    std::set<DynamicVariable> dynamicVariableList;
+    std::vector<DynamicVariable*> dynamicVariableList;
 };
 #endif // MAINVIEW_H
