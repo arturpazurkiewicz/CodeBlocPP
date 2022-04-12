@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <frontend/dynamicvariable.h>
 #include <frontend/outputview.h>
+#include <set>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainView; }
@@ -20,6 +22,8 @@ public:
 
 
 private slots:
+
+    void fillOperationSelect();
 
     void getVariableData();
 
@@ -39,9 +43,12 @@ private slots:
 
     void on_clearButton_clicked();
 
+    void on_select_operation_button_clicked();
+
 private:
     Ui::MainView *ui;
     DynamicVariable *selectedVariable;
     OutputView *outputView;
+    std::set<DynamicVariable> dynamicVariableList;
 };
 #endif // MAINVIEW_H

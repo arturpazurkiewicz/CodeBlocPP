@@ -214,6 +214,40 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+       <widget class="QWidget" name="verticalLayoutWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>80</y>
+          <width>291</width>
+          <height>351</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="code_flow_layout"/>
+       </widget>
+       <widget class="QComboBox" name="operation_select">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>121</width>
+          <height>26</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="select_operation_button">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>50</y>
+          <width>71</width>
+          <height>29</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>SELECT</string>
+        </property>
+       </widget>
       </widget>
      </item>
      <item>

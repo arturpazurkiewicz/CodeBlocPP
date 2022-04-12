@@ -3,6 +3,7 @@
 #include <QLineEdit>
 #include <QIntValidator>
 #include <QLocale>
+#include <QComboBox>
 
 MainView::MainView(QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +15,7 @@ MainView::MainView(QWidget *parent)
     ui->line_value->setValidator(validator);
     QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit*>(ui->output_area->itemAt(0)->widget());
     optionsArea->setPlainText("CodeBloc++: \n");
+    fillOperationSelect();
 }
 
 MainView::~MainView()
@@ -21,6 +23,12 @@ MainView::~MainView()
     delete ui;
 }
 
+void MainView::fillOperationSelect(){
+    ui->operation_select->addItem("IF");
+    ui->operation_select->addItem("JUMP");
+    ui->operation_select->addItem("OPERATION");
+    ui->operation_select->addItem("WRITE");
+}
 
 void MainView::on_actionSave_triggered()
 {
@@ -42,6 +50,7 @@ void MainView::on_actionAbout_triggered()
 void MainView::on_addNewVariable_clicked(){
 
     DynamicVariable *button = new DynamicVariable(this);
+    //dynamicVariableList.insert(*button);
 
     QVBoxLayout *layout = qobject_cast<QVBoxLayout*>(ui->variables_area->layout());
 
@@ -76,6 +85,7 @@ void MainView::on_deleteVariable_clicked()
                ui->line_value->clear();
            }
        }
+        //dynamicVariableList.erase(*selectedVariable);
 }
 
 
@@ -84,7 +94,6 @@ void MainView::on_saveVariable_clicked()
       selectedVariable->getMyVariable()->setVariable(ui->line_variable->text().toStdString());
       selectedVariable->getMyVariable()->setStartValue(ui->line_value->text().toInt());
       selectedVariable->setText("Variable: " + ui->line_variable->text() + " Value: " + ui->line_value->text());
-      qDebug() << QString::fromStdString(selectedVariable->getMyVariable()->getVariable());
 
    /*  for(int i = 0; i < ui->variables_area->count(); i++){
           DynamicVariable *button = qobject_cast<DynamicVariable*>(ui->variables_area->itemAt(i)->widget());
@@ -113,5 +122,11 @@ void MainView::on_clearButton_clicked()
     QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit*>(ui->output_area->itemAt(0)->widget());
 
     optionsArea->setPlainText("CodeBloc++: \n");
+}
+
+
+void MainView::on_select_operation_button_clicked()
+{
+    qDebug() << ui->operation_select->currentText();
 }
 
