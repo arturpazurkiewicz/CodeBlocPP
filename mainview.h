@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <frontend/dynamicvariable.h>
 #include <frontend/outputview.h>
+#include <frontend/commandview.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -44,10 +45,14 @@ private slots:
 
     void on_select_operation_button_clicked();
 
+    void addIfOperation();
+
+
 private:
     Ui::MainView *ui;
     DynamicVariable *selectedVariable;
     OutputView *outputView;
     std::vector<DynamicVariable*> dynamicVariableList;
+    std::vector<int> linesList;
 };
 #endif // MAINVIEW_H

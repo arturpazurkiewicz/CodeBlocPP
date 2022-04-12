@@ -4,6 +4,9 @@
 #include <QIntValidator>
 #include <QLocale>
 #include <QComboBox>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QCheckBox>
 
 MainView::MainView(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainView), selectedVariable(nullptr) {
@@ -129,5 +132,45 @@ void MainView::on_clearButton_clicked() {
 
 void MainView::on_select_operation_button_clicked() {
     qDebug() << ui->operation_select->currentText();
+    if (ui->operation_select->currentText().toStdString() == "IF"){
+        addIfOperation();
+    }
+    else {
+        qDebug() << ui->operation_select->currentText();
+    }
 }
 
+void MainView::addIfOperation()
+{
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    CommandView *ifOperation = new CommandView(this);
+    linesList.push_back(ifOperation->getCommandLine());
+    QLabel *commandLine = new QLabel(this);
+    QCheckBox *debug = new QCheckBox(this);
+    QComboBox *variable1 = new QComboBox(this);
+    QComboBox *variable2 = new QComboBox(this);
+    QComboBox *ifOperator = new QComboBox(this);
+
+     for (auto variable: dynamicVariableList){
+         variable1->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
+         variable2->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
+     }
+
+     ifOperator->addItem("NEQ");
+     ifOperator->addItem("EQ");
+     ifOperator->addItem("LT");
+     ifOperator->addItem("GT");
+     ifOperator->addItem("LE");
+     ifOperator->addItem("GE");
+
+    commandLine->setText(QString::number(ifOperation->getCommandLine()));
+
+   ifOperation->addWidget(debug);
+   ifOperation->addWidget(commandLine);
+   ifOperation->addWidget(variable1);
+   ifOperation->addWidget(ifOperator);
+   ifOperation->addWidget(variable2);
+
+   layout->addLayout(ifOperation);
+
+}

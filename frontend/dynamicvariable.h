@@ -12,8 +12,6 @@ public:
     explicit DynamicVariable(QWidget *parent = nullptr);
        ~DynamicVariable();
        static int VariableCounter;
-      // int getVariable();
-      // int getValue();
        Variable* getMyVariable();
 
 public slots:
