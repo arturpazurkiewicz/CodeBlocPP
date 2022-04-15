@@ -7,6 +7,8 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QCheckBox>
+#include <QApplication>
+#include <QDoubleSpinBox>
 
 MainView::MainView(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainView), selectedVariable(nullptr) {
@@ -20,6 +22,20 @@ MainView::MainView(QWidget *parent)
 
 MainView::~MainView() {
     delete ui;
+}
+
+void MainView::Update_Ui()
+{
+    QList<QComboBox*> comboBoxList = this->findChildren<QComboBox*>();
+    foreach(QComboBox *comboBox, comboBoxList){
+        qDebug() <<QString::number(comboBox->width());
+        if (comboBox->width() == 68){
+            comboBox->clear();
+            for (auto variable: dynamicVariableList){
+                comboBox->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
+            }
+        }
+    }
 }
 
 void MainView::fillOperationSelect() {
@@ -44,6 +60,7 @@ void MainView::on_actionAbout_triggered() {
 }
 
 void MainView::on_addNewVariable_clicked() {
+    this->setEnabled(false);
     DynamicVariable *button = new DynamicVariable(this);
     dynamicVariableList.push_back(button);
 
@@ -60,6 +77,8 @@ void MainView::on_addNewVariable_clicked() {
 
     connect(button, SIGNAL(clicked()), this, SLOT(getVariableData()));
 
+    Update_Ui();
+    this->setEnabled(true);
 }
 
 void MainView::getVariableData() {
@@ -71,6 +90,7 @@ void MainView::getVariableData() {
 
 
 void MainView::on_deleteVariable_clicked() {
+    this->setEnabled(false);
     if (selectedVariable != nullptr) {
         for (int i = 0; i < ui->variables_area->count(); i++) {
 
@@ -88,11 +108,13 @@ void MainView::on_deleteVariable_clicked() {
         }
         selectedVariable = nullptr;
     }
-
+    Update_Ui();
+    this->setEnabled(true);
 }
 
 
 void MainView::on_saveVariable_clicked() {
+    this->setEnabled(false);
     selectedVariable->getMyVariable()->setVariable(ui->line_variable->text().toStdString());
     selectedVariable->getMyVariable()->setStartValue(ui->line_value->text().toInt());
     selectedVariable->setText("Variable: " + ui->line_variable->text() + " Value: " + ui->line_value->text());
@@ -112,6 +134,8 @@ void MainView::on_saveVariable_clicked() {
         }
     }
 
+    Update_Ui();
+    this->setEnabled(true);
 }
 
 
@@ -151,10 +175,14 @@ void MainView::addIfOperation()
     QComboBox *variable2 = new QComboBox(this);
     QComboBox *ifOperator = new QComboBox(this);
 
+    variable1->resize(68, variable1->width());
+    variable2->resize(68, variable2->width());
+
      for (auto variable: dynamicVariableList){
          variable1->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
          variable2->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
      }
+
 
      ifOperator->addItem("NEQ");
      ifOperator->addItem("EQ");

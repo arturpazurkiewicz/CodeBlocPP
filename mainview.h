@@ -23,6 +23,8 @@ public:
 
 private slots:
 
+    void Update_Ui();
+
     void fillOperationSelect();
 
     void getVariableData();
