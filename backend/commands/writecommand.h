@@ -9,13 +9,15 @@
 #include "backend/command.h"
 #include "backend/variable.h"
 
-class WriteCommand : public Command{
+class WriteCommand : public Command {
 public:
     WriteCommand(void (*breakFunction)(bool), Variable *variableOut);
 
     Variable *variableOut;
 
     int run(void (*outputFunction)(std::string), int currentLine) override;
+
+    bool isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) override;
 };
 
 

@@ -15,3 +15,20 @@ int IfCommand::run(void (*outputFunction)(std::string), int currentLine) {
     return jumpFalse;
 }
 
+bool IfCommand::isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) {
+    bool valid = true;
+    if (variable1 == nullptr || variable2 == nullptr) {
+        outputFunction(std::to_string(currentLine) + ": invalid values");
+        valid = false;
+    }
+    if (jumpTrue < 0 || jumpTrue > maxLine || jumpTrue == currentLine) {
+        outputFunction(std::to_string(currentLine) + ": invalid true jump");
+        valid = false;
+    }
+    if (jumpFalse < 0 || jumpFalse > maxLine || jumpFalse == currentLine) {
+        outputFunction(std::to_string(currentLine) + ": invalid false jump");
+        valid = false;
+    }
+    return valid;
+}
+

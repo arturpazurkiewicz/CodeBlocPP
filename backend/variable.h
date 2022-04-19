@@ -1,10 +1,10 @@
 #ifndef VARIABLE_H
 #define VARIABLE_H
+
 #include <iostream>
 
 
-class Variable
-{
+class Variable {
 public:
     Variable(std::string variable, int startValue);
 

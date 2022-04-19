@@ -1,7 +1,7 @@
 #include "variable.h"
 
 Variable::Variable(std::string variable, int startValue) : variable(variable), startValue(startValue),
-                                                            value(startValue) {}
+                                                           value(startValue) {}
 
 std::string Variable::getVariable() {
     return variable;
@@ -27,7 +27,6 @@ int Variable::getValue() const {
 void Variable::setValue(int value) {
     Variable::value = value;
 }
-
 
 
 Variable Variable::operator+=(const Variable &rhs) {

@@ -1,12 +1,22 @@
 #include "compiler.h"
 
 
+Compiler::Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints, Mode mode,
+                   void (*outputFunction)(std::string), CompilerValidator &compilerValidator) : commands(
+        commands), breakpoints(breakpoints), mode(mode), outputFunction(outputFunction), compilerValidator(
+        compilerValidator) {
+    isValid = compilerValidator.isCompilerDataValid(outputFunction, &commands);
+}
+
 Compiler::Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints,
                    Mode mode, void (*outputFunction)(std::string))
-        : commands(commands), breakpoints(breakpoints), mode(mode),
-          outputFunction(outputFunction) {}
+        : Compiler(commands, breakpoints, mode, outputFunction, compilerValidator) {}
+
 
 bool Compiler::run() {
+    if (!isValid){
+        return true;
+    }
     if (mode == DEBUG) {
 
     } else {
@@ -17,6 +27,9 @@ bool Compiler::run() {
 }
 
 bool Compiler::run(bool nextLine) {
+    if (!isValid){
+        return true;
+    }
     if (nextLine) {
         return oneStep();
     } else {

@@ -27,6 +27,8 @@ set(PROJECT_SOURCES
         backend/variable.h
         backend/variable.cpp
         backend/command.h
+        backend/compilervalidator.h
+        backend/compilervalidator.cpp
         backend/commands/operationcommand.cpp
         backend/commands/operationcommand.h
         backend/commands/writecommand.cpp

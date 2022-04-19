@@ -24,6 +24,10 @@ public:
     Operation operation;
 
     int run(void (*outputFunction)(std::string), int currentLine) override;
+
+    bool isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) override;
+
+
 };
 
 

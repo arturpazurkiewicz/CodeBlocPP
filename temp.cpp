@@ -11,7 +11,7 @@
 
 
 void myCout(const std::string input) {
-    qInfo() << "Value:" << qPrintable(QString::fromStdString(input));
+    qInfo() << qPrintable(QString::fromStdString(input));
 }
 
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     auto *va = new Variable("a", 0);
     auto *vb = new Variable("b", 1);
     auto *v1 = new Variable("1", 1);
-    auto *vp = new Variable("p", 10);
+    auto *vp = new Variable("p", 12);
     auto *vi = new Variable("i", 0);
 
 
@@ -48,7 +48,6 @@ int main(int argc, char *argv[]) {
     commands.push_back(c3);
     commands.push_back(c4);
     commands.push_back(c5);
-    commands.erase(commands.begin() + 1);
 
     std::set<int> breakpoints;
 
