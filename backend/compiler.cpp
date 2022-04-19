@@ -14,6 +14,7 @@ Compiler::Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints,
 
 
 bool Compiler::run() {
+    return run(false);
     if (!isValid){
         return true;
     }
@@ -33,8 +34,17 @@ bool Compiler::run(bool nextLine) {
     if (nextLine) {
         return oneStep();
     } else {
-        return run();
+        if (mode == DEBUG){
+            bool result;
+            do {
+                result = oneStep();
+            } while (!result && breakpoints->find(currentLine) == breakpoints->end());
+            return result;
+        } else {
+            while (!oneStep());
+        }
     }
+    return true;
 }
 
 
