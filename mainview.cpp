@@ -1,6 +1,7 @@
 #include "mainview.h"
 #include "./ui_mainview.h"
 #include "frontend/commands/ifcommandview.h"
+#include "frontend/commands/jumpcommandview.h"
 #include <QLineEdit>
 #include <QIntValidator>
 #include <QLocale>
@@ -164,7 +165,10 @@ void MainView::on_select_operation_button_clicked() {
     qDebug() << ui->operation_select->currentText();
     if (ui->operation_select->currentText().toStdString() == "IF") {
         addIfOperation();
-    } else {
+    } else if (ui->operation_select->currentText().toStdString() == "JUMP") {
+        addJumpOperation();
+    }
+    else {
         qDebug() << ui->operation_select->currentText();
     }
     Update_Ui();
@@ -174,5 +178,11 @@ void MainView::addIfOperation() {
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
     CommandView *ifOperation = new IfCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
     layout->addLayout(ifOperation);
+}
 
+void MainView::addJumpOperation() {
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    CommandView *jumpOperation = new JumpCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
+    qDebug() << "foengworngrjn";
+    layout->addLayout(jumpOperation);
 }

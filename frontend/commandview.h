@@ -23,6 +23,7 @@ public:
 
 
 protected:
+    QPushButton *deleteCommand;
     QCheckBox *debug;
     Command *generatedCommand = nullptr;
 
@@ -35,6 +36,8 @@ protected:
         }
         return nullptr;
     }
+
+    void deleteCommandObject(QWidget layout, int layoutIndex);
 };
 // TODO fill rest of commands
 // TODO add delete on commands

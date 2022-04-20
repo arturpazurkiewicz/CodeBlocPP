@@ -9,6 +9,8 @@
 #include <QComboBox>
 #include <QLabel>
 #include "frontend/commandview.h"
+#include "backend/commands/ifcommand.h"
+
 
 class IfCommandView : public CommandView {
 public:
@@ -23,7 +25,10 @@ private:
     QComboBox *variable2;
     QComboBox *ifYes;
     QComboBox *ifNo;
+    QComboBox *comparator;
     QLabel *commandLine;
+
+    static Comparator findComparator(const QString& comparator);
 };
 
 

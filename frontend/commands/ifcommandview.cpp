@@ -10,41 +10,56 @@
 
 IfCommandView::IfCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables)
         : CommandView(parent, lineNumber), variable1(new QComboBox(parent)), variable2(new QComboBox(parent)),
-          ifYes(new QComboBox(parent)), ifNo(new QComboBox(parent)), commandLine(new QLabel(parent)) {
-    auto *ifOperator = new QComboBox(parent);
+          ifYes(new QComboBox(parent)), ifNo(new QComboBox(parent)), commandLine(new QLabel(parent)), comparator(new QComboBox(parent)) {
 
-
-    ifOperator->addItem("NEQ");
-    ifOperator->addItem("EQ");
-    ifOperator->addItem("LT");
-    ifOperator->addItem("GT");
-    ifOperator->addItem("LE");
-    ifOperator->addItem("GE");
+    comparator->addItem("!=");
+    comparator->addItem("==");
+    comparator->addItem("<");
+    comparator->addItem(">");
+    comparator->addItem("<=");
+    comparator->addItem(">=");
 
     this->addWidget(commandLine);
     this->addWidget(variable1);
-    this->addWidget(ifOperator);
+    this->addWidget(comparator);
     this->addWidget(variable2);
     this->addWidget(ifNo);
     this->addWidget(ifYes);
     updateUi(linesSize, lineNumber, variables);
 }
 
+Comparator IfCommandView::findComparator(const QString& comparator){
+        if(comparator == "!=") return NEQ;
+        else if(comparator == "==") return EQ;
+        else if(comparator == "<") return LT;
+        else if(comparator == ">") return GT;
+        else if(comparator == "<=") return LE;
+        else return GE;
+}
+
 Command *IfCommandView::getMyCommand(std::vector<DynamicVariable *> *variables) {
-//    TODO enums on operation
     generatedCommand = new IfCommand(nullptr, findSelectedVariable(variables, variable1->currentText()),
                                      findSelectedVariable(variables, variable2->currentText()), ifYes->currentText().toInt(),
-                                     ifNo->currentText().toInt(), NEQ);
+                                     ifNo->currentText().toInt(), findComparator(comparator->currentText()));
     return generatedCommand;
 }
 
 void IfCommandView::updateUi(int linesSize, int lineNumber, std::vector<DynamicVariable *> *variables) {
-//    TODO - should remember selected
+    auto selectedVariable1 = variable1->currentText();
+    auto selectedVariable2 = variable2->currentText();
+    auto selectedIfNo = ifNo->currentText();
+    auto selectedIfYes = ifYes->currentText();
     variable1->clear();
     variable2->clear();
     for (auto variable: *variables) {
         variable1->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
         variable2->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
+        if (variable->getMyVariable()->getVariable() == selectedVariable1.toStdString()){
+            variable1->setCurrentText(selectedVariable1);
+        }
+        if (variable->getMyVariable()->getVariable() == selectedVariable2.toStdString()){
+            variable2->setCurrentText(selectedVariable2);
+        }
     }
     ifNo->clear();
     ifYes->clear();
@@ -52,6 +67,12 @@ void IfCommandView::updateUi(int linesSize, int lineNumber, std::vector<DynamicV
         if (i != lineNumber) {
             ifNo->addItem(QString::number(i));
             ifYes->addItem(QString::number(i));
+        }
+        if (QString::number(i) == selectedIfNo){
+            ifNo->setCurrentText(selectedIfNo);
+        }
+        if (QString::number(i) == selectedIfYes){
+            ifYes->setCurrentText(selectedIfYes);
         }
     }
     this->lineNumber = lineNumber;

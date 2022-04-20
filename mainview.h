@@ -24,11 +24,11 @@ public:
     MainView(QWidget *parent = nullptr);
     ~MainView();
 
-
+    void Update_Ui();
 
 private slots:
 
-    void Update_Ui();
+
 
     void fillOperationSelect();
 
@@ -54,6 +54,7 @@ private slots:
 
     void addIfOperation();
 
+    void addJumpOperation();
 
 private:
     Ui::MainView *ui;
