@@ -6,7 +6,7 @@
 #define CODEBLOCPP_OPERATIONCOMMANDVIEW_H
 
 
-class operationcommandview {
+class OperationCommandView {
 
 };
 

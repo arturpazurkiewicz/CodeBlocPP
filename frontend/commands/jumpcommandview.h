@@ -6,7 +6,7 @@
 #define CODEBLOCPP_JUMPCOMMANDVIEW_H
 
 
-class jumpcommandview {
+class JumpCommandView {
 
 };
 

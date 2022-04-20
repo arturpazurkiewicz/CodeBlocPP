@@ -1,5 +1,6 @@
 #include "mainview.h"
 #include "./ui_mainview.h"
+#include "frontend/commands/ifcommandview.h"
 #include <QLineEdit>
 #include <QIntValidator>
 #include <QLocale>
@@ -24,18 +25,21 @@ MainView::~MainView() {
     delete ui;
 }
 
-void MainView::Update_Ui()
-{
-    QList<QComboBox*> comboBoxList = this->findChildren<QComboBox*>();
-    foreach(QComboBox *comboBox, comboBoxList){
-        qDebug() <<QString::number(comboBox->width());
-        if (comboBox->width() == 68){
-            comboBox->clear();
-            for (auto variable: dynamicVariableList){
-                comboBox->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
-            }
+void MainView::Update_Ui() {
+    auto *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    QList<QObject *> qList = layout->children();
+
+    for (int i = 0; i < qList.size(); ++i) {
+        qDebug() << "Update";
+        QObject *qItem = qList[i];
+
+        if (instanceof<CommandView>(qItem)) {
+            auto *commandView = (CommandView *) qItem;
+            commandView->updateUi(qList.size(), i, &dynamicVariableList);
         }
     }
+    qDebug() << "Koniec";
+
 }
 
 void MainView::fillOperationSelect() {
@@ -114,28 +118,30 @@ void MainView::on_deleteVariable_clicked() {
 
 
 void MainView::on_saveVariable_clicked() {
-    this->setEnabled(false);
-    selectedVariable->getMyVariable()->setVariable(ui->line_variable->text().toStdString());
-    selectedVariable->getMyVariable()->setStartValue(ui->line_value->text().toInt());
-    selectedVariable->setText("Variable: " + ui->line_variable->text() + " Value: " + ui->line_value->text());
-    std::string newValue = ui->line_variable->text().toStdString();
+    if (selectedVariable != nullptr){
+        this->setEnabled(false);
+        selectedVariable->getMyVariable()->setVariable(ui->line_variable->text().toStdString());
+        selectedVariable->getMyVariable()->setStartValue(ui->line_value->text().toInt());
+        selectedVariable->setText("Variable: " + ui->line_variable->text() + " Value: " + ui->line_value->text());
+        std::string newValue = ui->line_variable->text().toStdString();
 
-    for (int i = 0; i < ui->variables_area->count(); i++) {
-        auto *button = qobject_cast<DynamicVariable *>(ui->variables_area->itemAt(i)->widget());
-        if (newValue == button->getMyVariable()->getVariable() && selectedVariable != button) {
-            newValue += "_copy";
-            selectedVariable->getMyVariable()->setVariable(newValue);
-            selectedVariable->getMyVariable()->setStartValue(ui->line_value->text().toInt());
-            selectedVariable->setText(
-                    "Variable: " + QString::fromStdString(selectedVariable->getMyVariable()->getVariable()) +
-                    " Value: " + ui->line_value->text());
-            qDebug() << "1";
-            i = -1;
+        for (int i = 0; i < ui->variables_area->count(); i++) {
+            auto *button = qobject_cast<DynamicVariable *>(ui->variables_area->itemAt(i)->widget());
+            if (newValue == button->getMyVariable()->getVariable() && selectedVariable != button) {
+                newValue += "_copy";
+                selectedVariable->getMyVariable()->setVariable(newValue);
+                selectedVariable->getMyVariable()->setStartValue(ui->line_value->text().toInt());
+                selectedVariable->setText(
+                        "Variable: " + QString::fromStdString(selectedVariable->getMyVariable()->getVariable()) +
+                        " Value: " + ui->line_value->text());
+                qDebug() << "1";
+                i = -1;
+            }
         }
-    }
 
-    Update_Ui();
-    this->setEnabled(true);
+        Update_Ui();
+        this->setEnabled(true);
+    }
 }
 
 
@@ -156,59 +162,17 @@ void MainView::on_clearButton_clicked() {
 
 void MainView::on_select_operation_button_clicked() {
     qDebug() << ui->operation_select->currentText();
-    if (ui->operation_select->currentText().toStdString() == "IF"){
+    if (ui->operation_select->currentText().toStdString() == "IF") {
         addIfOperation();
-    }
-    else {
+    } else {
         qDebug() << ui->operation_select->currentText();
     }
+    Update_Ui();
 }
 
-void MainView::addIfOperation()
-{
+void MainView::addIfOperation() {
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
-    CommandView *ifOperation = new CommandView(this);
-    linesList.push_back(ifOperation->getCommandLine());
-    QLabel *commandLine = new QLabel(this);
-    QCheckBox *debug = new QCheckBox(this);
-    QComboBox *variable1 = new QComboBox(this);
-    QComboBox *variable2 = new QComboBox(this);
-    QComboBox *ifYes = new QComboBox(this);
-    QComboBox *ifNo = new QComboBox(this);
-    QComboBox *ifOperator = new QComboBox(this);
-
-    variable1->resize(68, variable1->width());
-    variable2->resize(68, variable2->width());
-
-
-     for (auto variable: dynamicVariableList){
-         variable1->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
-         variable2->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
-     }
-
-     for (auto line: linesList){
-         ifNo->addItem(QString::number(line));
-         ifYes->addItem(QString::number(line));
-     }
-
-
-     ifOperator->addItem("NEQ");
-     ifOperator->addItem("EQ");
-     ifOperator->addItem("LT");
-     ifOperator->addItem("GT");
-     ifOperator->addItem("LE");
-     ifOperator->addItem("GE");
-
-    commandLine->setText(QString::number(ifOperation->getCommandLine()));
-
-   ifOperation->addWidget(debug);
-   ifOperation->addWidget(commandLine);
-   ifOperation->addWidget(variable1);
-   ifOperation->addWidget(ifOperator);
-   ifOperation->addWidget(variable2);
-   ifOperation->addWidget(ifNo);
-   ifOperation->addWidget(ifYes);
-
-   layout->addLayout(ifOperation);
+    CommandView *ifOperation = new IfCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
+    layout->addLayout(ifOperation);
 
 }

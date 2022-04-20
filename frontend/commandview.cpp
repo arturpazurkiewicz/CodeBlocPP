@@ -1,19 +1,16 @@
 #include "commandview.h"
 
-//CommandView::CommandView(QWidget *parent, Command *command) : QHBoxLayout(parent)
-CommandView::CommandView(QWidget *parent) : QHBoxLayout(parent)
-{
-    lineNumber++;
-}
 
-CommandView::~CommandView()
-{
+CommandView::~CommandView() {
     this->QHBoxLayout::~QHBoxLayout();
-    if (generatedCommand != nullptr){
-        delete generatedCommand;
-    }
+    delete generatedCommand;
+
 }
 
-Command* CommandView::getMyCommand(){
-   // return command;
+CommandView::CommandView(QWidget *parent, int lineNumber) : QHBoxLayout(parent), lineNumber(lineNumber), debug(new QCheckBox(parent)) {
+    this->addWidget(debug);
 }
+
+
+
+

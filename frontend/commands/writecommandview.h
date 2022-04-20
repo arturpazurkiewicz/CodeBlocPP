@@ -6,7 +6,7 @@
 #define CODEBLOCPP_WRITECOMMANDVIEW_H
 
 
-class writecommandview {
+class WriteCommandView {
 
 };
 

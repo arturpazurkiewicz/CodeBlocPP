@@ -3,3 +3,4 @@
 //
 
 #include "operationcommandview.h"
+//    TODO enums on operation

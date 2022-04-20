@@ -11,6 +11,11 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainView; }
 QT_END_NAMESPACE
 
+template<typename Base, typename T>
+inline bool instanceof(const T *ptr) {
+    return dynamic_cast<const Base*>(ptr) != nullptr;
+}
+
 class MainView : public QMainWindow
 {
     Q_OBJECT
