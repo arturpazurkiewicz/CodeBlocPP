@@ -5,23 +5,25 @@
 #include <QHBoxLayout>
 #include "./backend/command.h"
 
-class CommandView: public QHBoxLayout
-{
-     Q_OBJECT
+class CommandView : public QHBoxLayout {
+Q_OBJECT
 public:
     //explicit CommandView(QWidget *parent = nullptr, Command *command = nullptr);
-     explicit CommandView(QWidget *parent = nullptr);
-       ~CommandView();
-       static int LineNumber;
-       Command* getMyCommand();
-       int getCommandLine() const;
+    explicit CommandView(QWidget *parent = nullptr);
 
-public slots:
+    ~CommandView() override;
+
+    int lineNumber;
+
+    virtual Command *getMyCommand() = 0;
+    virtual void updateUi() = 0;
 
 private:
-    //int value = 0;
-    int lineNumber = 0;
-    //Command* myCommand = new Command("", 0);
+public:
+
+
+protected:
+    Command *generatedCommand = nullptr;
 };
 
 #endif // COMMANDVIEW_H

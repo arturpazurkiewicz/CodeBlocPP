@@ -173,14 +173,22 @@ void MainView::addIfOperation()
     QCheckBox *debug = new QCheckBox(this);
     QComboBox *variable1 = new QComboBox(this);
     QComboBox *variable2 = new QComboBox(this);
+    QComboBox *ifYes = new QComboBox(this);
+    QComboBox *ifNo = new QComboBox(this);
     QComboBox *ifOperator = new QComboBox(this);
 
     variable1->resize(68, variable1->width());
     variable2->resize(68, variable2->width());
 
+
      for (auto variable: dynamicVariableList){
          variable1->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
          variable2->addItem(QString::fromStdString(variable->getMyVariable()->getVariable()));
+     }
+
+     for (auto line: linesList){
+         ifNo->addItem(QString::number(line));
+         ifYes->addItem(QString::number(line));
      }
 
 
@@ -198,6 +206,8 @@ void MainView::addIfOperation()
    ifOperation->addWidget(variable1);
    ifOperation->addWidget(ifOperator);
    ifOperation->addWidget(variable2);
+   ifOperation->addWidget(ifNo);
+   ifOperation->addWidget(ifYes);
 
    layout->addLayout(ifOperation);
 

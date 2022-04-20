@@ -46,7 +46,7 @@ set(PROJECT_SOURCES
 
 
         ${TS_FILES}
-        )
+        frontend/commands/ifcommandview.cpp frontend/commands/ifcommandview.h frontend/commands/jumpcommandview.cpp frontend/commands/jumpcommandview.h frontend/commands/writecommandview.cpp frontend/commands/writecommandview.h frontend/commands/operationcommandview.cpp frontend/commands/operationcommandview.h)
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(CodeBlocPP
