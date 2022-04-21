@@ -8,7 +8,10 @@
 JumpCommandView::JumpCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables)
         : CommandView(parent, lineNumber), jumpTo(new QComboBox(parent)), commandLine(new QLabel(parent)) {
 
+    QLabel *label1 = new QLabel("jump to: ");
+
     this->addWidget(commandLine);
+    this->addWidget(label1);
     this->addWidget(jumpTo);
     updateUi(linesSize, lineNumber, variables);
 }

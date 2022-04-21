@@ -24,11 +24,15 @@ public:
     MainView(QWidget *parent = nullptr);
     ~MainView();
 
+    static MainView& getInstance(){
+        static MainView instance;
+        return instance;
+    }
+
     void Update_Ui();
+    static void Delete_Command(QPushButton *deleteButton = nullptr);
 
 private slots:
-
-
 
     void fillOperationSelect();
 
@@ -55,6 +59,10 @@ private slots:
     void addIfOperation();
 
     void addJumpOperation();
+
+    void addOperationOperation();
+
+    void addWriteOperation();
 
 private:
     Ui::MainView *ui;

@@ -10,7 +10,6 @@
 class CommandView : public QHBoxLayout {
 Q_OBJECT
 public:
-    //explicit CommandView(QWidget *parent = nullptr, Command *command = nullptr);
     CommandView(QWidget *parent, int lineNumber);
 
     ~CommandView() override;
@@ -37,8 +36,9 @@ protected:
         return nullptr;
     }
 
-    void deleteCommandObject(QWidget layout, int layoutIndex);
+private slots:
+    void deleteCommandObject();
+
 };
-// TODO fill rest of commands
 // TODO add delete on commands
 #endif // COMMANDVIEW_H

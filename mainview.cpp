@@ -2,6 +2,8 @@
 #include "./ui_mainview.h"
 #include "frontend/commands/ifcommandview.h"
 #include "frontend/commands/jumpcommandview.h"
+#include "frontend/commands/operationcommandview.h"
+#include "frontend/commands/writecommandview.h"
 #include <QLineEdit>
 #include <QIntValidator>
 #include <QLocale>
@@ -168,6 +170,12 @@ void MainView::on_select_operation_button_clicked() {
     } else if (ui->operation_select->currentText().toStdString() == "JUMP") {
         addJumpOperation();
     }
+    else if (ui->operation_select->currentText().toStdString() == "OPERATION") {
+        addOperationOperation();
+    }
+    else if (ui->operation_select->currentText().toStdString() == "WRITE") {
+        addWriteOperation();
+    }
     else {
         qDebug() << ui->operation_select->currentText();
     }
@@ -185,4 +193,29 @@ void MainView::addJumpOperation() {
     CommandView *jumpOperation = new JumpCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
     qDebug() << "foengworngrjn";
     layout->addLayout(jumpOperation);
+}
+
+void MainView::addOperationOperation() {
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    CommandView *operationOperation = new OperationCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
+    layout->addLayout(operationOperation);
+}
+
+void MainView::addWriteOperation() {
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    CommandView *writeOperation = new WriteCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
+    layout->addLayout(writeOperation);
+}
+
+void MainView::Delete_Command(QPushButton *deleteButton) { //not working
+    qDebug() << "delete" + QString::number(getInstance().ui->code_flow_layout->children().count());
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(getInstance().ui->code_flow_layout->layout());
+    for (int i = 0; i < getInstance().ui->code_flow_layout->count(); i++) {
+        qDebug() << "delete";
+        QLayout *command = qobject_cast<QLayout *>(getInstance().ui->code_flow_layout->itemAt(i)->widget());
+        qDebug() << command->itemAt(0)->widget()->windowIconText();
+        if (command->itemAt(0)->widget() == deleteButton) {
+            qDebug() << "delete" + QString::number(i);
+        }
+    }
 }

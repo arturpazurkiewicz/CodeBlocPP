@@ -12,6 +12,12 @@ IfCommandView::IfCommandView(QWidget *parent, int lineNumber, int linesSize, std
         : CommandView(parent, lineNumber), variable1(new QComboBox(parent)), variable2(new QComboBox(parent)),
           ifYes(new QComboBox(parent)), ifNo(new QComboBox(parent)), commandLine(new QLabel(parent)), comparator(new QComboBox(parent)) {
 
+    QLabel *label1 = new QLabel("if: ");
+    QLabel *label2 = new QLabel("is: ");
+    QLabel *label3 = new QLabel("to: ");
+    QLabel *label4 = new QLabel("then: ");
+    QLabel *label5 = new QLabel("else: ");
+
     comparator->addItem("!=");
     comparator->addItem("==");
     comparator->addItem("<");
@@ -20,10 +26,15 @@ IfCommandView::IfCommandView(QWidget *parent, int lineNumber, int linesSize, std
     comparator->addItem(">=");
 
     this->addWidget(commandLine);
+    this->addWidget(label1);
     this->addWidget(variable1);
+    this->addWidget(label2);
     this->addWidget(comparator);
+    this->addWidget(label3);
     this->addWidget(variable2);
+    this->addWidget(label4);
     this->addWidget(ifNo);
+    this->addWidget(label5);
     this->addWidget(ifYes);
     updateUi(linesSize, lineNumber, variables);
 }
