@@ -20,6 +20,7 @@ public:
 
     virtual void updateUi(int linesSize, int lineNumber, std::vector<DynamicVariable *> *variables) = 0;
 
+    std::function<void(CommandView*)> deleteFunction = nullptr;
 
 protected:
     QPushButton *deleteCommand;

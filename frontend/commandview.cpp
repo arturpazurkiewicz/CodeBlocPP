@@ -18,8 +18,9 @@ CommandView::CommandView(QWidget *parent, int lineNumber) : QHBoxLayout(parent),
 }
 
 void CommandView::deleteCommandObject(){
-    auto *deleteButton = (QPushButton *) sender();
-    MainView::Delete_Command(deleteButton);
+//    auto *deleteButton = (QPushButton *) sender();
+//    MainView::Delete_Command(deleteButton);
+    deleteFunction(this);
    /* for (int i = 0; i < ui->code_flow_layout->count(); i++) {
         QLayout *command = qobject_cast<QLayout *>(ui->code_flow_layout->itemAt(i)->widget());
         if(command->itemAt(0)->widget() == deleteButton){

@@ -4,6 +4,7 @@
 #include "frontend/commands/jumpcommandview.h"
 #include "frontend/commands/operationcommandview.h"
 #include "frontend/commands/writecommandview.h"
+#include "backend/compiler.h"
 #include <QLineEdit>
 #include <QIntValidator>
 #include <QLocale>
@@ -150,6 +151,13 @@ void MainView::on_saveVariable_clicked() {
 
 void MainView::on_runButton_clicked() {
     QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit *>(ui->output_area->itemAt(0)->widget());
+    std::vector<Command *> commands;
+    std::set<int> breakpoints;
+    auto fun = [optionsArea](const std::string data) -> void {
+        optionsArea->appendPlainText(QString::fromStdString(data));
+    };
+    auto *compiler = new Compiler(commands, &breakpoints, NORMAL, nullptr);
+    compiler->check(fun);
 
     optionsArea->appendPlainText("run");
 
@@ -184,7 +192,12 @@ void MainView::on_select_operation_button_clicked() {
 
 void MainView::addIfOperation() {
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    auto deleteFun = [layout](CommandView *command) -> void {
+        layout->removeItem(command);
+    };
     CommandView *ifOperation = new IfCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
+//    TODO to constructor
+    ifOperation->deleteFunction = deleteFun;
     layout->addLayout(ifOperation);
 }
 
