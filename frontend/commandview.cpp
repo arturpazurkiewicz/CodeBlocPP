@@ -8,9 +8,9 @@ CommandView::~CommandView() {
 
 }
 
-CommandView::CommandView(QWidget *parent, int lineNumber) : QHBoxLayout(parent), lineNumber(lineNumber),
+CommandView::CommandView(QWidget *parent, int lineNumber, std::function<void(CommandView*)> *deleteFunction) : QHBoxLayout(parent), lineNumber(lineNumber),
                                                             debug(new QCheckBox(parent)),
-                                                            deleteCommand(new QPushButton(parent)) {
+                                                            deleteCommand(new QPushButton(parent)), deleteFunction(deleteFunction) {
     connect(deleteCommand, SIGNAL(clicked()), this, SLOT(deleteCommandObject()));
     deleteCommand->setText("DELETE");
     this->addWidget(deleteCommand);
@@ -18,15 +18,9 @@ CommandView::CommandView(QWidget *parent, int lineNumber) : QHBoxLayout(parent),
 }
 
 void CommandView::deleteCommandObject(){
-//    auto *deleteButton = (QPushButton *) sender();
-//    MainView::Delete_Command(deleteButton);
-    deleteFunction(this);
-   /* for (int i = 0; i < ui->code_flow_layout->count(); i++) {
-        QLayout *command = qobject_cast<QLayout *>(ui->code_flow_layout->itemAt(i)->widget());
-        if(command->itemAt(0)->widget() == deleteButton){
-            qDebug() << "delete" + QString::number(i);
-        }
-    }*/
+
+    (*deleteFunction)(this);
+
 }
 
 

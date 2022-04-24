@@ -14,7 +14,7 @@
 
 class JumpCommandView : public CommandView{
 public:
-    JumpCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables);
+    JumpCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables, std::function<void(CommandView*)> *deleteFun);
 
     Command *getMyCommand(std::vector<DynamicVariable *> *variables) override;
 

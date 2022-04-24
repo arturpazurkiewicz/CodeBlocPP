@@ -8,8 +8,8 @@
 #include "ifcommandview.h"
 #include "backend/commands/ifcommand.h"
 
-IfCommandView::IfCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables)
-        : CommandView(parent, lineNumber), variable1(new QComboBox(parent)), variable2(new QComboBox(parent)),
+IfCommandView::IfCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables, std::function<void(CommandView*)> *deleteFun)
+        : CommandView(parent, lineNumber, deleteFun), variable1(new QComboBox(parent)), variable2(new QComboBox(parent)),
           ifYes(new QComboBox(parent)), ifNo(new QComboBox(parent)), commandLine(new QLabel(parent)), comparator(new QComboBox(parent)) {
 
     QLabel *label1 = new QLabel("if: ");

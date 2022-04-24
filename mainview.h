@@ -26,7 +26,7 @@ public:
 
 
     void Update_Ui();
-    static void Delete_Command(QPushButton *deleteButton = nullptr);
+    void Delete_Command(QPushButton *deleteButton = nullptr);
 
 private slots:
 

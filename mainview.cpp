@@ -205,19 +205,20 @@ void MainView::on_select_operation_button_clicked() {
 
 void MainView::addIfOperation() {
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
-    auto deleteFun = [layout](CommandView *command) -> void {
+    auto deleteFun = [layout, this](CommandView *command) -> void {
         layout->removeItem(command);
+        this->Update_Ui();
     };
-    CommandView *ifOperation = new IfCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
-//    TODO to constructor
-    ifOperation->deleteFunction = deleteFun;
+    CommandView *ifOperation = new IfCommandView(this, layout->count(), layout->count(), &dynamicVariableList, deleteFun);
     layout->addLayout(ifOperation);
 }
 
 void MainView::addJumpOperation() {
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
-    CommandView *jumpOperation = new JumpCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
-    qDebug() << "foengworngrjn";
+    auto deleteFun = [layout](CommandView *command) -> void {
+        layout->removeItem(command);
+    };
+    CommandView *jumpOperation = new JumpCommandView(this, layout->count(), layout->count(), &dynamicVariableList, deleteFun);
     layout->addLayout(jumpOperation);
 }
 
