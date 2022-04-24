@@ -24,11 +24,14 @@ MainView::MainView(QWidget *parent)
     optionsArea->setPlainText("CodeBloc++: \n");
     fillOperationSelect();
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
-    deleteFun = [layout](CommandView *command) -> void {
-//        layout->removeItem(command);
-//        command->deleteLater();
-//        TODO not working
-        delete command;
+    deleteFun = [layout, this](CommandView *command) -> void {
+        QLayoutItem *child;
+        while ((child = command->takeAt(0)) != nullptr) {
+            delete child->widget();
+            delete child;
+        }
+        layout->removeItem(command);
+        this->Update_Ui();
     };
     outputFunction = [optionsArea](const std::string& data) -> void {
         optionsArea->appendPlainText(QString::fromStdString(data));
@@ -175,7 +178,7 @@ void MainView::on_runButton_clicked() {
         outputFunction("error occurred");
     }
     compiler->run();
-    compiler->run()
+    //compiler->run()
     if (compiler->isEnded()){
         outputFunction("ended");
         reloadVariables();
