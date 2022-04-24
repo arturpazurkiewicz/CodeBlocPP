@@ -24,10 +24,6 @@ public:
     MainView(QWidget *parent = nullptr);
     ~MainView();
 
-    static MainView& getInstance(){
-        static MainView instance;
-        return instance;
-    }
 
     void Update_Ui();
     static void Delete_Command(QPushButton *deleteButton = nullptr);
@@ -70,5 +66,6 @@ private:
     OutputView *outputView;
     std::vector<DynamicVariable*> dynamicVariableList;
     std::vector<int> linesList;
+    void reloadVariables();
 };
 #endif // MAINVIEW_H

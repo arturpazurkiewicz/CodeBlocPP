@@ -153,14 +153,27 @@ void MainView::on_runButton_clicked() {
     QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit *>(ui->output_area->itemAt(0)->widget());
     std::vector<Command *> commands;
     std::set<int> breakpoints;
-    auto resultFunction = [optionsArea](const std::string& data) -> void {
+    auto outputFunction = [optionsArea](const std::string& data) -> void {
         optionsArea->appendPlainText(QString::fromStdString(data));
     };
-    auto *compiler = new Compiler(commands, &breakpoints, NORMAL, nullptr);
-    compiler->check(resultFunction);
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
 
-    optionsArea->appendPlainText("run");
-
+    for (auto commandView : layout->findChildren<CommandView*>()){
+        commands.push_back(commandView->getMyCommand(&dynamicVariableList));
+    }
+    auto *compiler = new Compiler(commands, &breakpoints, NORMAL, outputFunction);
+    if (compiler->isValid()){
+        outputFunction("run");
+    } else {
+        outputFunction("error occurred");
+    }
+    compiler->run();
+    if (compiler->isEnded()){
+        outputFunction("ended");
+        reloadVariables();
+    } else {
+        outputFunction("stopped");
+    }
 }
 
 
@@ -220,15 +233,9 @@ void MainView::addWriteOperation() {
     layout->addLayout(writeOperation);
 }
 
-void MainView::Delete_Command(QPushButton *deleteButton) { //not working
-    qDebug() << "delete" + QString::number(getInstance().ui->code_flow_layout->children().count());
-    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(getInstance().ui->code_flow_layout->layout());
-    for (int i = 0; i < getInstance().ui->code_flow_layout->count(); i++) {
-        qDebug() << "delete";
-        QLayout *command = qobject_cast<QLayout *>(getInstance().ui->code_flow_layout->itemAt(i)->widget());
-        qDebug() << command->itemAt(0)->widget()->windowIconText();
-        if (command->itemAt(0)->widget() == deleteButton) {
-            qDebug() << "delete" + QString::number(i);
-        }
+void MainView::reloadVariables() {
+    for (auto variable: dynamicVariableList){
+        variable->getMyVariable()->reload();
     }
 }
+

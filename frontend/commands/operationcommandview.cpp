@@ -35,9 +35,9 @@ Operation OperationCommandView::findOperation(const QString& comparator){
 }
 
 Command *OperationCommandView::getMyCommand(std::vector<DynamicVariable *> *variables) {
-    generatedCommand = new OperationCommand(nullptr, findSelectedVariable(variables, variable1->currentText()),
-                                     findSelectedVariable(variables, variable2->currentText()),
-                                     findSelectedVariable(variables, variable3->currentText()), findOperation(operation->currentText()));
+    generatedCommand = new OperationCommand(nullptr, findSelectedVariable(variables, variable2->currentText()),
+                                     findSelectedVariable(variables, variable3->currentText()),
+                                     findSelectedVariable(variables, variable1->currentText()), findOperation(operation->currentText()));
     return generatedCommand;
 }
 

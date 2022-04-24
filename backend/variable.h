@@ -40,6 +40,8 @@ public:
 
     Variable operator/=(const Variable &rhs);
 
+    void reload();
+
 private:
     std::string variable;
     int startValue;

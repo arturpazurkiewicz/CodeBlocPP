@@ -33,9 +33,9 @@ IfCommandView::IfCommandView(QWidget *parent, int lineNumber, int linesSize, std
     this->addWidget(label3);
     this->addWidget(variable2);
     this->addWidget(label4);
-    this->addWidget(ifNo);
-    this->addWidget(label5);
     this->addWidget(ifYes);
+    this->addWidget(label5);
+    this->addWidget(ifNo);
     updateUi(linesSize, lineNumber, variables);
 }
 

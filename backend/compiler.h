@@ -24,9 +24,10 @@ public:
 
     bool run(bool nextLine);
 
-    void check(std::function<void(const std::string)> func){
-        func("hej sokoły!");
-    }
+
+    bool isValid() const;
+
+    bool isEnded() const;
 
 private:
     std::vector<Command *> commands;
@@ -34,11 +35,15 @@ private:
 //    std::vector<Variable *> variables;
     const Mode mode;
     int currentLine = 0;
-    bool isValid;
+    bool valid;
+    bool ended = false;
 
     std::function<void(const std::string)> outputFunction;
 
     bool oneStep();
+
+    bool innerRun(bool nextLine);
+
 
     void breakFunction(bool enabled);
 

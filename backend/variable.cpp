@@ -72,3 +72,7 @@ bool Variable::operator<=(const Variable &rhs) const {
 bool Variable::operator>=(const Variable &rhs) const {
     return !(*this < rhs);
 }
+
+void Variable::reload() {
+    value = startValue;
+}
