@@ -153,11 +153,11 @@ void MainView::on_runButton_clicked() {
     QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit *>(ui->output_area->itemAt(0)->widget());
     std::vector<Command *> commands;
     std::set<int> breakpoints;
-    auto fun = [optionsArea](const std::string data) -> void {
+    auto resultFunction = [optionsArea](const std::string& data) -> void {
         optionsArea->appendPlainText(QString::fromStdString(data));
     };
     auto *compiler = new Compiler(commands, &breakpoints, NORMAL, nullptr);
-    compiler->check(fun);
+    compiler->check(resultFunction);
 
     optionsArea->appendPlainText("run");
 

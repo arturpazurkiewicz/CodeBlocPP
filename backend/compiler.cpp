@@ -2,29 +2,19 @@
 
 
 Compiler::Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints, Mode mode,
-                   void (*outputFunction)(std::string), CompilerValidator &compilerValidator) : commands(
+                   std::function<void(const std::string)> outputFunction, CompilerValidator &compilerValidator) : commands(
         commands), breakpoints(breakpoints), mode(mode), outputFunction(outputFunction), compilerValidator(
         compilerValidator) {
     isValid = compilerValidator.isCompilerDataValid(outputFunction, &commands);
 }
 
 Compiler::Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints,
-                   Mode mode, void (*outputFunction)(std::string))
+                   Mode mode, std::function<void(const std::string)> outputFunction)
         : Compiler(commands, breakpoints, mode, outputFunction, compilerValidator) {}
 
 
 bool Compiler::run() {
     return run(false);
-    if (!isValid){
-        return true;
-    }
-    if (mode == DEBUG) {
-
-    } else {
-        while (!oneStep());
-    }
-
-    return true;
 }
 
 bool Compiler::run(bool nextLine) {
@@ -64,7 +54,7 @@ void Compiler::breakFunction(bool enabled) {
     if (mode == DEBUG) {
         auto function = commands[currentLine]->breakFunction;
         if (function != nullptr) {
-            function(enabled);
+            (*function)(enabled);
         }
     }
 }

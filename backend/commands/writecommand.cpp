@@ -4,15 +4,15 @@
 
 #include "writecommand.h"
 
-WriteCommand::WriteCommand(void (*breakFunction)(bool), Variable *variableOut) : Command(breakFunction),
+WriteCommand::WriteCommand(std::function<void(bool)> *breakFunction, Variable *variableOut) : Command(breakFunction),
                                                                                  variableOut(variableOut) {}
 
-int WriteCommand::run(void (*outputFunction)(std::string), int currentLine) {
+int WriteCommand::run(std::function<void(const std::string)> outputFunction, int currentLine) {
     outputFunction(std::to_string(variableOut->getValue()));
     return currentLine + 1;
 }
 
-bool WriteCommand::isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) {
+bool WriteCommand::isValid(std::function<void(const std::string)> outputFunction, int currentLine, int maxLine) {
     if (variableOut == nullptr) {
         outputFunction(std::to_string(currentLine) + ": invalid variable");
         return false;

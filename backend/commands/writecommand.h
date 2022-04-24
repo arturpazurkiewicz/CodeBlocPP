@@ -11,13 +11,13 @@
 
 class WriteCommand : public Command {
 public:
-    WriteCommand(void (*breakFunction)(bool), Variable *variableOut);
+    WriteCommand(std::function<void(bool)> *breakFunction, Variable *variableOut);
 
     Variable *variableOut;
 
-    int run(void (*outputFunction)(std::string), int currentLine) override;
+    int run(std::function<void(const std::string)> outputFunction, int currentLine) override;
 
-    bool isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) override;
+    bool isValid(std::function<void(const std::string)> outputFunction, int currentLine, int maxLine) override;
 };
 
 

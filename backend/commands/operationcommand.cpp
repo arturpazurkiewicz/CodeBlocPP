@@ -4,14 +4,14 @@
 
 #include "operationcommand.h"
 
-OperationCommand::OperationCommand(void (*breakFunction)(bool), Variable *variable1, Variable *variable2,
+OperationCommand::OperationCommand(std::function<void(bool)> *breakFunction, Variable *variable1, Variable *variable2,
                                    Variable *variableOut, Operation operation) : Command(breakFunction),
                                                                                  variable1(variable1),
                                                                                  variable2(variable2),
                                                                                  variableOut(variableOut),
                                                                                  operation(operation) {}
 
-int OperationCommand::run(void (*outputFunction)(std::string), int currentLine) {
+int OperationCommand::run(std::function<void(const std::string)> outputFunction, int currentLine) {
     int oldValue = variable1->getValue();
     if (operation == DIVIDE && variable2->getValue() == 0){
         outputFunction(std::to_string(currentLine) + ": divide by 0");
@@ -26,7 +26,7 @@ int OperationCommand::run(void (*outputFunction)(std::string), int currentLine) 
     return currentLine + 1;
 }
 
-bool OperationCommand::isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) {
+bool OperationCommand::isValid(std::function<void(const std::string)> outputFunction, int currentLine, int maxLine) {
     if (variable1 == nullptr || variable2 == nullptr) {
         outputFunction(std::to_string(currentLine) + ": invalid values");
         return false;

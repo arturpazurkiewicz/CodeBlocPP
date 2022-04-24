@@ -6,7 +6,7 @@
 
 class CompilerValidator {
 public:
-    static bool isCompilerDataValid(void (*outputFunction)(std::string), std::vector<Command *> *commands);
+    static bool isCompilerDataValid(std::function<void(const std::string)> outputFunction, std::vector<Command *> *commands);
 };
 
 

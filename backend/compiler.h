@@ -15,10 +15,10 @@ enum Mode {
 class Compiler {
 public:
     Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints, Mode mode,
-             void (*outputFunction)(std::string));
+             std::function<void(const std::string)> outputFunction);
 
     Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints, Mode mode,
-             void (*outputFunction)(std::string), CompilerValidator &compilerValidator);
+             std::function<void(const std::string)> outputFunction, CompilerValidator &compilerValidator);
 
     bool run();
 
@@ -36,7 +36,7 @@ private:
     int currentLine = 0;
     bool isValid;
 
-    void (*outputFunction)(std::string);
+    std::function<void(const std::string)> outputFunction;
 
     bool oneStep();
 

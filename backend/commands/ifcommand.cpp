@@ -4,18 +4,18 @@
 
 #include "ifcommand.h"
 
-IfCommand::IfCommand(void (*breakFunction)(bool), Variable *variable1, Variable *variable2, int jumpTrue, int jumpFalse,
+IfCommand::IfCommand(std::function<void(bool)> *breakFunction, Variable *variable1, Variable *variable2, int jumpTrue, int jumpFalse,
                      Comparator operation) : Command(breakFunction), variable1(variable1), variable2(variable2),
                                              jumpTrue(jumpTrue), jumpFalse(jumpFalse), operation(operation) {}
 
-int IfCommand::run(void (*outputFunction)(std::string), int currentLine) {
+int IfCommand::run(std::function<void(const std::string)> outputFunction, int currentLine) {
     if (compare(variable1, variable2, operation)) {
         return jumpTrue;
     }
     return jumpFalse;
 }
 
-bool IfCommand::isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) {
+bool IfCommand::isValid(std::function<void(const std::string)> outputFunction, int currentLine, int maxLine) {
     bool valid = true;
     if (variable1 == nullptr || variable2 == nullptr) {
         outputFunction(std::to_string(currentLine) + ": invalid values");

@@ -35,7 +35,7 @@ bool compare(const T l, const T r, const Comparator comparator) {
 
 class IfCommand : public Command {
 public:
-    IfCommand(void (*breakFunction)(bool), Variable *variable1, Variable *variable2, int jumpTrue, int jumpFalse,
+    IfCommand(std::function<void(bool)> *breakFunction, Variable *variable1, Variable *variable2, int jumpTrue, int jumpFalse,
               Comparator operation);
 
     Variable *variable1;
@@ -44,9 +44,9 @@ public:
     int jumpFalse;
     Comparator operation;
 
-    int run(void (*outputFunction)(std::string), int currentLine) override;
+    int run(std::function<void(const std::string)> outputFunction, int currentLine) override;
 
-    bool isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) override;
+    bool isValid(std::function<void(const std::string)> outputFunction, int currentLine, int maxLine) override;
 };
 
 

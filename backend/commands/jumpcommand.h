@@ -10,14 +10,13 @@
 
 class JumpCommand : public Command {
 public:
-    JumpCommand(void (*breakFunction)(bool), int line) : Command(breakFunction),
-                                                         line(line) {}
+    JumpCommand(std::function<void(bool)> *breakFunction, int line);
 
     int line;
 
-    int run(void (*outputFunction)(std::string), int currentLine) override;
+    int run(std::function<void(const std::string)> outputFunction, int currentLine) override;
 
-    bool isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) override;
+    bool isValid(std::function<void(const std::string)> outputFunction, int currentLine, int maxLine) override;
 };
 
 

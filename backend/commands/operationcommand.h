@@ -15,7 +15,7 @@ enum Operation {
 
 class OperationCommand : public Command {
 public:
-    OperationCommand(void (*breakFunction)(bool), Variable *variable1, Variable *variable2, Variable *variableOut,
+    OperationCommand(std::function<void(bool)> *breakFunction, Variable *variable1, Variable *variable2, Variable *variableOut,
                      Operation operation);
 
     Variable *variable1;
@@ -23,9 +23,9 @@ public:
     Variable *variableOut;
     Operation operation;
 
-    int run(void (*outputFunction)(std::string), int currentLine) override;
+    int run(std::function<void(const std::string)> outputFunction, int currentLine) override;
 
-    bool isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) override;
+    bool isValid(std::function<void(const std::string)> outputFunction, int currentLine, int maxLine) override;
 
 
 };

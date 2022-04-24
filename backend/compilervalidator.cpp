@@ -4,7 +4,7 @@
 
 #include "compilervalidator.h"
 
-bool CompilerValidator::isCompilerDataValid(void (*outputFunction)(std::string), std::vector<Command *> *commands) {
+bool CompilerValidator::isCompilerDataValid(std::function<void(const std::string)> outputFunction, std::vector<Command *> *commands) {
     if (commands == nullptr) {
         outputFunction("commands cannot be null");
         return false;

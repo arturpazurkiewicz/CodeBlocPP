@@ -2,17 +2,18 @@
 #define COMMAND_H
 
 #include <iostream>
+#include <functional>
 
 class Command {
 public:
-    explicit Command(void (*breakFunction)(bool)) : breakFunction(breakFunction) {}
+    explicit Command(std::function<void(bool)>  *breakFunction) : breakFunction(breakFunction) {}
 
-    virtual int run(void (*outputFunction)(std::string), int currentLine) = 0;
+    virtual int run(std::function<void(const std::string)> outputFunction, int currentLine) = 0;
 
 //    Break function which informs gui to mark currently executed command
-    void (*breakFunction)(bool){};
+    std::function<void(bool)> *breakFunction;
 
-    virtual bool isValid(void (*outputFunction)(std::string), int currentLine, int maxLine) = 0;
+    virtual bool isValid(std::function<void(const std::string)> outputFunction, int currentLine, int maxLine) = 0;
 };
 
 #endif // COMMAND_H
