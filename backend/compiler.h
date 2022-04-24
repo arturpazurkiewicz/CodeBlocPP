@@ -15,10 +15,10 @@ enum Mode {
 class Compiler {
 public:
     Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints, Mode mode,
-             std::function<void(const std::string)> outputFunction);
+             const std::function<void(const std::string)>& outputFunction);
 
     Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints, Mode mode,
-             std::function<void(const std::string)> outputFunction, CompilerValidator &compilerValidator);
+             const std::function<void(const std::string)>& outputFunction, CompilerValidator &compilerValidator);
 
     bool run();
 

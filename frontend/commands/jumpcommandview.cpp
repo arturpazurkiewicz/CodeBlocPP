@@ -3,10 +3,12 @@
 //
 
 #include "jumpcommandview.h"
+
+#include <utility>
 #include "backend/commands/jumpcommand.h"
 
-JumpCommandView::JumpCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables, std::function<void(CommandView*)> *deleteFun)
-        : CommandView(parent, lineNumber, deleteFun), jumpTo(new QComboBox(parent)), commandLine(new QLabel(parent)) {
+JumpCommandView::JumpCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables, std::function<void(CommandView*)> deleteFun)
+        : CommandView(parent, lineNumber, std::move(deleteFun)), jumpTo(new QComboBox(parent)), commandLine(new QLabel(parent)) {
 
     QLabel *label1 = new QLabel("jump to: ");
 

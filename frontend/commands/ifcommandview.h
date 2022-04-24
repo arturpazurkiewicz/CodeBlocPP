@@ -14,7 +14,7 @@
 
 class IfCommandView : public CommandView {
 public:
-    IfCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables, std::function<void(CommandView*)> *deleteFun);
+    IfCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables, std::function<void(CommandView*)> deleteFun);
 
     Command *getMyCommand(std::vector<DynamicVariable *> *variables) override;
 

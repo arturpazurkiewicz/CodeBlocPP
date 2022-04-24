@@ -11,7 +11,7 @@
 
 class OperationCommandView : public CommandView {
 public:
-    OperationCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables);
+    OperationCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables,std::function<void(CommandView*)> deleteFun);
 
     Command *getMyCommand(std::vector<DynamicVariable *> *variables) override;
 

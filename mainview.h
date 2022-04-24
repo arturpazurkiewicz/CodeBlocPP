@@ -67,5 +67,7 @@ private:
     std::vector<DynamicVariable*> dynamicVariableList;
     std::vector<int> linesList;
     void reloadVariables();
+    std::function<void(CommandView*)> deleteFun;
+    std::function<void(const std::string)> outputFunction;
 };
 #endif // MAINVIEW_H

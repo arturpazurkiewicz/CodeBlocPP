@@ -3,10 +3,12 @@
 //
 
 #include "writecommandview.h"
+
+#include <utility>
 #include "backend/commands/writecommand.h"
 
-WriteCommandView::WriteCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables)
-        : CommandView(parent, lineNumber), variable1(new QComboBox(parent)),  commandLine(new QLabel(parent)){
+WriteCommandView::WriteCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables,std::function<void(CommandView*)> deleteFun)
+        : CommandView(parent, lineNumber,std::move(deleteFun)), variable1(new QComboBox(parent)),  commandLine(new QLabel(parent)){
 
     QLabel *label1 = new QLabel("write: ");
 

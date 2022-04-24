@@ -4,10 +4,11 @@
 
 #include <QComboBox>
 #include <QLabel>
+#include <utility>
 #include "operationcommandview.h"
 
-OperationCommandView::OperationCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables)
-        : CommandView(parent, lineNumber), variable1(new QComboBox(parent)), variable2(new QComboBox(parent)), variable3(new QComboBox(parent)),
+OperationCommandView::OperationCommandView(QWidget *parent, int lineNumber, int linesSize, std::vector<DynamicVariable *> *variables,std::function<void(CommandView*)> deleteFun)
+        : CommandView(parent, lineNumber,std::move(deleteFun)), variable1(new QComboBox(parent)), variable2(new QComboBox(parent)), variable3(new QComboBox(parent)),
           commandLine(new QLabel(parent)), operation(new QComboBox(parent)) {
 
     QLabel *label1 = new QLabel("=");

@@ -10,7 +10,7 @@
 class CommandView : public QHBoxLayout {
 Q_OBJECT
 public:
-    CommandView(QWidget *parent, int lineNumber, std::function<void(CommandView*)> *deleteFunction);
+    CommandView(QWidget *parent, int lineNumber, std::function<void(CommandView*)> deleteFunction);
 
     ~CommandView() override;
 
@@ -25,7 +25,7 @@ protected:
     QCheckBox *debug;
     Command *generatedCommand = nullptr;
 
-    std::function<void(CommandView*)> *deleteFunction;
+    std::function<void(CommandView*)> deleteFunction;
 
     static Variable *findSelectedVariable(std::vector<DynamicVariable *> *variables, const QString& selected) {
         std::string sel = selected.toStdString();

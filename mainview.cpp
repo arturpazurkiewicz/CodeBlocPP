@@ -23,6 +23,16 @@ MainView::MainView(QWidget *parent)
     QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit *>(ui->output_area->itemAt(0)->widget());
     optionsArea->setPlainText("CodeBloc++: \n");
     fillOperationSelect();
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    deleteFun = [layout](CommandView *command) -> void {
+//        layout->removeItem(command);
+//        command->deleteLater();
+//        TODO not working
+        delete command;
+    };
+    outputFunction = [optionsArea](const std::string& data) -> void {
+        optionsArea->appendPlainText(QString::fromStdString(data));
+    };
 }
 
 MainView::~MainView() {
@@ -150,12 +160,9 @@ void MainView::on_saveVariable_clicked() {
 
 
 void MainView::on_runButton_clicked() {
-    QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit *>(ui->output_area->itemAt(0)->widget());
     std::vector<Command *> commands;
+//    TODO breakpoints
     std::set<int> breakpoints;
-    auto outputFunction = [optionsArea](const std::string& data) -> void {
-        optionsArea->appendPlainText(QString::fromStdString(data));
-    };
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
 
     for (auto commandView : layout->findChildren<CommandView*>()){
@@ -168,6 +175,7 @@ void MainView::on_runButton_clicked() {
         outputFunction("error occurred");
     }
     compiler->run();
+    compiler->run()
     if (compiler->isEnded()){
         outputFunction("ended");
         reloadVariables();
@@ -205,32 +213,25 @@ void MainView::on_select_operation_button_clicked() {
 
 void MainView::addIfOperation() {
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
-    auto deleteFun = [layout, this](CommandView *command) -> void {
-        layout->removeItem(command);
-        this->Update_Ui();
-    };
     CommandView *ifOperation = new IfCommandView(this, layout->count(), layout->count(), &dynamicVariableList, deleteFun);
     layout->addLayout(ifOperation);
 }
 
 void MainView::addJumpOperation() {
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
-    auto deleteFun = [layout](CommandView *command) -> void {
-        layout->removeItem(command);
-    };
     CommandView *jumpOperation = new JumpCommandView(this, layout->count(), layout->count(), &dynamicVariableList, deleteFun);
     layout->addLayout(jumpOperation);
 }
 
 void MainView::addOperationOperation() {
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
-    CommandView *operationOperation = new OperationCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
+    CommandView *operationOperation = new OperationCommandView(this, layout->count(), layout->count(), &dynamicVariableList, deleteFun);
     layout->addLayout(operationOperation);
 }
 
 void MainView::addWriteOperation() {
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
-    CommandView *writeOperation = new WriteCommandView(this, layout->count(), layout->count(), &dynamicVariableList);
+    CommandView *writeOperation = new WriteCommandView(this, layout->count(), layout->count(), &dynamicVariableList, deleteFun);
     layout->addLayout(writeOperation);
 }
 

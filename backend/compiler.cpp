@@ -1,15 +1,17 @@
 #include "compiler.h"
 
+#include <utility>
+
 
 Compiler::Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints, Mode mode,
-                   std::function<void(const std::string)> outputFunction, CompilerValidator &compilerValidator) : commands(
+                   const std::function<void(const std::string)>& outputFunction, CompilerValidator &compilerValidator) : commands(
         commands), breakpoints(breakpoints), mode(mode), outputFunction(outputFunction), compilerValidator(
         compilerValidator) {
-    valid = compilerValidator.isCompilerDataValid(outputFunction, &commands);
+    valid = CompilerValidator::isCompilerDataValid(outputFunction, &commands);
 }
 
 Compiler::Compiler(std::vector<Command *> &commands, std::set<int> *breakpoints,
-                   Mode mode, std::function<void(const std::string)> outputFunction)
+                   Mode mode, const std::function<void(const std::string)>& outputFunction)
         : Compiler(commands, breakpoints, mode, outputFunction, compilerValidator) {}
 
 
