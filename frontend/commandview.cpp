@@ -21,7 +21,9 @@ CommandView::CommandView(QWidget *parent, int lineNumber, std::function<void(Com
 
 void CommandView::deleteCommandObject(){
     deleteFunction(this);
-
 }
 
+bool CommandView::getDebug() {
+    return debug->isChecked();
+}
 

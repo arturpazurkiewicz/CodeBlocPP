@@ -20,6 +20,8 @@ public:
 
     virtual void updateUi(int linesSize, int lineNumber, std::vector<DynamicVariable *> *variables) = 0;
 
+    bool getDebug();
+
 protected:
     QPushButton *deleteCommand;
     QCheckBox *debug;
@@ -39,7 +41,6 @@ protected:
 
 public slots:
     void deleteCommandObject();
-
 };
-// TODO add delete on commands
+
 #endif // COMMANDVIEW_H

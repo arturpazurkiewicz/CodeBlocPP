@@ -24,6 +24,7 @@ MainView::MainView(QWidget *parent)
     optionsArea->setPlainText("CodeBloc++: \n");
     fillOperationSelect();
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    //QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(runOnNext()));
     deleteFun = [layout, this](CommandView *command) -> void {
         QLayoutItem *child;
         while ((child = command->takeAt(0)) != nullptr) {
@@ -36,6 +37,8 @@ MainView::MainView(QWidget *parent)
     outputFunction = [optionsArea](const std::string& data) -> void {
         optionsArea->appendPlainText(QString::fromStdString(data));
     };
+    nextButton = qobject_cast<QPushButton *>(ui->nextButton);
+    nextButton->setEnabled(false);
 }
 
 MainView::~MainView() {
@@ -171,7 +174,7 @@ void MainView::on_runButton_clicked() {
     for (auto commandView : layout->findChildren<CommandView*>()){
         commands.push_back(commandView->getMyCommand(&dynamicVariableList));
     }
-    auto *compiler = new Compiler(commands, &breakpoints, NORMAL, outputFunction);
+    compiler = new Compiler(commands, &breakpoints, NORMAL, outputFunction);
     if (compiler->isValid()){
         outputFunction("run");
     } else {
@@ -187,6 +190,38 @@ void MainView::on_runButton_clicked() {
     }
 }
 
+void MainView::on_debugButton_clicked()
+{
+    qDebug() << "szukam";
+    nextButton->setEnabled(true);
+    std::vector<Command *> commands;
+    std::set<int> breakpoints;
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    int i = 0;
+    for (auto commandView : layout->findChildren<CommandView*>()){
+        commands.push_back(commandView->getMyCommand(&dynamicVariableList));
+        if(commandView->getDebug()){
+            qDebug() << QString::number(i);
+            breakpoints.insert(i);
+        }
+        i++;
+    }
+    compiler = new Compiler(commands, &breakpoints, DEBUG, outputFunction);
+    if (compiler->isValid()){
+        outputFunction("run");
+    } else {
+        outputFunction("error occurred");
+    }
+    compiler->run();
+    if (compiler->isEnded()){
+        outputFunction("ended");
+        reloadVariables();
+        nextButton->setEnabled(false);
+    } else {
+        outputFunction("stopped");
+        nextButton->setEnabled(true);
+    }
+}
 
 void MainView::on_clearButton_clicked() {
     QPlainTextEdit *optionsArea = qobject_cast<QPlainTextEdit *>(ui->output_area->itemAt(0)->widget());
@@ -244,3 +279,18 @@ void MainView::reloadVariables() {
     }
 }
 
+void MainView::on_nextButton_clicked()
+{
+    if(compiler != nullptr){
+        qDebug() << "run2";
+        compiler->run();
+        if (compiler->isEnded()){
+            outputFunction("ended");
+            reloadVariables();
+            nextButton->setEnabled(false);
+        } else {
+            outputFunction("stopped");
+            nextButton->setEnabled(true);
+        }
+    }
+}

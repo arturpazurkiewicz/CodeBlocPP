@@ -5,6 +5,8 @@
 #include <frontend/dynamicvariable.h>
 #include <frontend/outputview.h>
 #include <frontend/commandview.h>
+#include <set>
+#include "backend/compiler.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -60,6 +62,10 @@ private slots:
 
     void addWriteOperation();
 
+    void on_debugButton_clicked();
+
+    void on_nextButton_clicked();
+
 private:
     Ui::MainView *ui;
     DynamicVariable *selectedVariable;
@@ -68,6 +74,9 @@ private:
     std::vector<int> linesList;
     void reloadVariables();
     std::function<void(CommandView*)> deleteFun;
+    std::function<void(CommandView*)> debugFun;
     std::function<void(const std::string)> outputFunction;
+    QPushButton *nextButton;
+    Compiler *compiler = nullptr;
 };
 #endif // MAINVIEW_H
