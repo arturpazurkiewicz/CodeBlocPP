@@ -17,6 +17,10 @@ CommandView::CommandView(QWidget *parent, int lineNumber, std::function<void(Com
     deleteCommand->setText("DELETE");
     this->addWidget(deleteCommand);
     this->addWidget(debug);
+    generateDebugMarks = [this](const bool data) -> void {
+        qDebug() << this->lineNumber;
+        qDebug() << data;
+    };
 }
 
 void CommandView::deleteCommandObject(){

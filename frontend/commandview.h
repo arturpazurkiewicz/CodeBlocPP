@@ -39,6 +39,8 @@ protected:
         return nullptr;
     }
 
+    std::function<void(bool)> generateDebugMarks;
+
 public slots:
     void deleteCommandObject();
 };

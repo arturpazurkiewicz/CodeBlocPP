@@ -78,5 +78,6 @@ private:
     std::function<void(const std::string)> outputFunction;
     QPushButton *nextButton;
     Compiler *compiler = nullptr;
+    std::set<int> breakpoints;
 };
 #endif // MAINVIEW_H

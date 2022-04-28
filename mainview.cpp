@@ -195,7 +195,7 @@ void MainView::on_debugButton_clicked()
     qDebug() << "szukam";
     nextButton->setEnabled(true);
     std::vector<Command *> commands;
-    std::set<int> breakpoints;
+
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
     int i = 0;
     for (auto commandView : layout->findChildren<CommandView*>()){

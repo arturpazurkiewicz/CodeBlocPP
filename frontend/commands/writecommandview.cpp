@@ -19,7 +19,7 @@ WriteCommandView::WriteCommandView(QWidget *parent, int lineNumber, int linesSiz
 }
 
 Command *WriteCommandView::getMyCommand(std::vector<DynamicVariable *> *variables) {
-    generatedCommand = new WriteCommand(nullptr, findSelectedVariable(variables, variable1->currentText()));
+    generatedCommand = new WriteCommand(&generateDebugMarks, findSelectedVariable(variables, variable1->currentText()));
     return generatedCommand;
 }
 
