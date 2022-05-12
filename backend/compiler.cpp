@@ -34,6 +34,7 @@ bool Compiler::innerRun(bool nextLine) {
         if (mode == DEBUG){
             if (firstStep && breakpoints->find(0) != breakpoints->end()) {
                 firstStep = false;
+                breakFunction(true);
                 return false;
             }
             firstStep = false;
