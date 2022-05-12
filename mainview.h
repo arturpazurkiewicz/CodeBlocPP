@@ -79,5 +79,6 @@ private:
     QPushButton *nextButton;
     Compiler *compiler = nullptr;
     std::set<int> breakpoints;
+    void reinterpretBreakpoints();
 };
 #endif // MAINVIEW_H

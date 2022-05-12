@@ -32,6 +32,11 @@ bool Compiler::innerRun(bool nextLine) {
         return oneStep();
     } else {
         if (mode == DEBUG){
+            if (firstStep && breakpoints->find(0) != breakpoints->end()) {
+                firstStep = false;
+                return false;
+            }
+            firstStep = false;
             bool result;
             do {
                 result = oneStep();

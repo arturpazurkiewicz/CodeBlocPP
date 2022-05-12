@@ -167,15 +167,14 @@ void MainView::on_saveVariable_clicked() {
 
 void MainView::on_runButton_clicked() {
     std::vector<Command *> commands;
-//    TODO breakpoints
-    std::set<int> breakpoints;
-    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    reinterpretBreakpoints();
+    auto *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
 
-    for (auto commandView : layout->findChildren<CommandView*>()){
+    for (auto commandView: layout->findChildren<CommandView *>()) {
         commands.push_back(commandView->getMyCommand(&dynamicVariableList));
     }
     compiler = new Compiler(commands, &breakpoints, NORMAL, outputFunction);
-    if (compiler->isValid()){
+    if (compiler->isValid()) {
         outputFunction("run");
     } else {
         outputFunction("error occurred");
@@ -195,17 +194,11 @@ void MainView::on_debugButton_clicked()
     qDebug() << "szukam";
     nextButton->setEnabled(true);
     std::vector<Command *> commands;
-
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
-    int i = 0;
     for (auto commandView : layout->findChildren<CommandView*>()){
         commands.push_back(commandView->getMyCommand(&dynamicVariableList));
-        if(commandView->getDebug()){
-            qDebug() << QString::number(i);
-            breakpoints.insert(i);
-        }
-        i++;
     }
+    reinterpretBreakpoints();
     compiler = new Compiler(commands, &breakpoints, DEBUG, outputFunction);
     if (compiler->isValid()){
         outputFunction("run");
@@ -282,9 +275,10 @@ void MainView::reloadVariables() {
 void MainView::on_nextButton_clicked()
 {
     if(compiler != nullptr){
+        reinterpretBreakpoints();
         qDebug() << "run2";
         compiler->run();
-        if (compiler->isEnded()){
+        if (compiler->isEnded()) {
             outputFunction("ended");
             reloadVariables();
             nextButton->setEnabled(false);
@@ -292,5 +286,17 @@ void MainView::on_nextButton_clicked()
             outputFunction("stopped");
             nextButton->setEnabled(true);
         }
+    }
+}
+
+void MainView::reinterpretBreakpoints() {
+    breakpoints.clear();
+    auto *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
+    int i = 0;
+    for (auto commandView: layout->findChildren<CommandView *>()) {
+        if (commandView->getDebug()) {
+            breakpoints.insert(i);
+        }
+        i++;
     }
 }
