@@ -50,7 +50,7 @@ Comparator IfCommandView::findComparator(const QString& comparator){
 }
 
 Command *IfCommandView::getMyCommand(std::vector<DynamicVariable *> *variables) {
-    generatedCommand = new IfCommand(nullptr, findSelectedVariable(variables, variable1->currentText()),
+    generatedCommand = new IfCommand(&generateDebugMarks, findSelectedVariable(variables, variable1->currentText()),
                                      findSelectedVariable(variables, variable2->currentText()), ifYes->currentText().toInt(),
                                      ifNo->currentText().toInt(), findComparator(comparator->currentText()));
     return generatedCommand;

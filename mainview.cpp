@@ -180,10 +180,9 @@ void MainView::on_runButton_clicked() {
         outputFunction("error occurred");
     }
     compiler->run();
-    //compiler->run()
     if (compiler->isEnded()){
         outputFunction("ended");
-        reloadVariables();
+        reloadOnEndVariables();
     } else {
         outputFunction("stopped");
     }
@@ -191,7 +190,6 @@ void MainView::on_runButton_clicked() {
 
 void MainView::on_debugButton_clicked()
 {
-    qDebug() << "szukam";
     nextButton->setEnabled(true);
     std::vector<Command *> commands;
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
@@ -208,7 +206,7 @@ void MainView::on_debugButton_clicked()
     compiler->run();
     if (compiler->isEnded()){
         outputFunction("ended");
-        reloadVariables();
+        reloadOnEndVariables();
         nextButton->setEnabled(false);
     } else {
         outputFunction("stopped");
@@ -266,9 +264,23 @@ void MainView::addWriteOperation() {
     layout->addLayout(writeOperation);
 }
 
-void MainView::reloadVariables() {
+void MainView::reloadOnEndVariables() {
     for (auto variable: dynamicVariableList){
         variable->getMyVariable()->reload();
+    }
+}
+
+void MainView::reloadOnNextVariables() {
+    int i = 0;
+    for (auto variable: dynamicVariableList){
+        auto *button = qobject_cast<DynamicVariable *>(ui->variables_area->itemAt(i)->widget());
+        button->getMyVariable()->setValue(variable->getMyVariable()->getValue());
+        button->setText(
+                "Variable: " + QString::fromStdString(variable->getMyVariable()->getVariable()) +
+                " Value: " + QString::number(variable->getMyVariable()->getValue()));
+        i++;
+        qDebug() << i;
+        Update_Ui();
     }
 }
 
@@ -276,13 +288,27 @@ void MainView::on_nextButton_clicked()
 {
     if(compiler != nullptr){
         reinterpretBreakpoints();
-        qDebug() << "run2";
         compiler->run();
         if (compiler->isEnded()) {
             outputFunction("ended");
-            reloadVariables();
+            reloadOnEndVariables();
             nextButton->setEnabled(false);
+            QList<QLayout *> layouts = ui->code_flow_layout->findChildren<QLayout *>();
+            for( auto layout : layouts){
+                for( int i = 0; i < layout->count(); ++i) {
+                    QWidget *widget = layout->itemAt(i)->widget();
+                    if (widget != NULL)
+                    {
+                        if(auto checkbox = qobject_cast<QCheckBox*>(widget)){
+                            checkbox->setChecked(false);
+                            checkbox->setStyleSheet("QCheckBox { background-color: none }");
+                            checkbox->repaint();
+                        }
+                    }
+                }
+            }
         } else {
+            reloadOnNextVariables();
             outputFunction("stopped");
             nextButton->setEnabled(true);
         }

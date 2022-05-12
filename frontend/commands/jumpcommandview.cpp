@@ -19,7 +19,7 @@ JumpCommandView::JumpCommandView(QWidget *parent, int lineNumber, int linesSize,
 }
 
 Command *JumpCommandView::getMyCommand(std::vector<DynamicVariable *> *variables) {
-    generatedCommand = new JumpCommand(nullptr, jumpTo->currentText().toInt());
+    generatedCommand = new JumpCommand(&generateDebugMarks, jumpTo->currentText().toInt());
     return generatedCommand;
 }
 

@@ -72,7 +72,8 @@ private:
     OutputView *outputView;
     std::vector<DynamicVariable*> dynamicVariableList;
     std::vector<int> linesList;
-    void reloadVariables();
+    void reloadOnEndVariables();
+    void reloadOnNextVariables();
     std::function<void(CommandView*)> deleteFun;
     std::function<void(CommandView*)> debugFun;
     std::function<void(const std::string)> outputFunction;

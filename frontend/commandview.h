@@ -23,6 +23,7 @@ public:
     bool getDebug();
 
 protected:
+    QCheckBox *activeDebugLine;
     QPushButton *deleteCommand;
     QCheckBox *debug;
     Command *generatedCommand = nullptr;

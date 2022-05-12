@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
         }
     }
     MainView w;
+    w.resize(1234, 638);
     w.show();
     return a.exec();
 }
