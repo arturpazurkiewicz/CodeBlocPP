@@ -28,19 +28,12 @@ public:
 
 
     void Update_Ui();
-    void Delete_Command(QPushButton *deleteButton = nullptr);
 
 private slots:
 
     void fillOperationSelect();
 
     void getVariableData();
-
-    void on_actionSave_triggered();
-
-    void on_actionLoad_triggered();
-
-    void on_actionAbout_triggered();
 
     void on_addNewVariable_clicked();
 
@@ -81,5 +74,7 @@ private:
     Compiler *compiler = nullptr;
     std::set<int> breakpoints;
     void reinterpretBreakpoints();
+
+    void clearAllDebug(bool clearFullData);
 };
 #endif // MAINVIEW_H

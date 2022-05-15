@@ -50,7 +50,7 @@ void MainView::Update_Ui() {
     QList<QObject *> qList = layout->children();
 
     for (int i = 0; i < qList.size(); ++i) {
-        qDebug() << "Update";
+//        qDebug() << "Update";
         QObject *qItem = qList[i];
 
         if (instanceof<CommandView>(qItem)) {
@@ -58,7 +58,7 @@ void MainView::Update_Ui() {
             commandView->updateUi(qList.size(), i, &dynamicVariableList);
         }
     }
-    qDebug() << "Koniec";
+//    qDebug() << "Koniec";
 
 }
 
@@ -67,20 +67,6 @@ void MainView::fillOperationSelect() {
     ui->operation_select->addItem("JUMP");
     ui->operation_select->addItem("OPERATION");
     ui->operation_select->addItem("WRITE");
-}
-
-void MainView::on_actionSave_triggered() {
-    qDebug() << "save";
-}
-
-
-void MainView::on_actionLoad_triggered() {
-    qDebug() << "load fom file";
-}
-
-
-void MainView::on_actionAbout_triggered() {
-    qDebug() << "about us";
 }
 
 void MainView::on_addNewVariable_clicked() {
@@ -154,7 +140,7 @@ void MainView::on_saveVariable_clicked() {
                 selectedVariable->setText(
                         "Variable: " + QString::fromStdString(selectedVariable->getMyVariable()->getVariable()) +
                         " Value: " + ui->line_value->text());
-                qDebug() << "1";
+//                qDebug() << "1";
                 i = -1;
             }
         }
@@ -168,6 +154,7 @@ void MainView::on_saveVariable_clicked() {
 void MainView::on_runButton_clicked() {
     std::vector<Command *> commands;
     reinterpretBreakpoints();
+    clearAllDebug(true);
     auto *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
 
     for (auto commandView: layout->findChildren<CommandView *>()) {
@@ -191,6 +178,7 @@ void MainView::on_runButton_clicked() {
 void MainView::on_debugButton_clicked()
 {
     nextButton->setEnabled(true);
+    clearAllDebug(false);
     std::vector<Command *> commands;
     QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->code_flow_layout->layout());
     for (auto commandView : layout->findChildren<CommandView*>()){
@@ -222,21 +210,19 @@ void MainView::on_clearButton_clicked() {
 
 
 void MainView::on_select_operation_button_clicked() {
-    qDebug() << ui->operation_select->currentText();
+//    qDebug() << ui->operation_select->currentText();
     if (ui->operation_select->currentText().toStdString() == "IF") {
         addIfOperation();
     } else if (ui->operation_select->currentText().toStdString() == "JUMP") {
         addJumpOperation();
-    }
-    else if (ui->operation_select->currentText().toStdString() == "OPERATION") {
+    } else if (ui->operation_select->currentText().toStdString() == "OPERATION") {
         addOperationOperation();
-    }
-    else if (ui->operation_select->currentText().toStdString() == "WRITE") {
+    } else if (ui->operation_select->currentText().toStdString() == "WRITE") {
         addWriteOperation();
     }
-    else {
-        qDebug() << ui->operation_select->currentText();
-    }
+//    else {
+//        qDebug() << ui->operation_select->currentText();
+//    }
     Update_Ui();
 }
 
@@ -279,7 +265,7 @@ void MainView::reloadOnNextVariables() {
                 "Variable: " + QString::fromStdString(variable->getMyVariable()->getVariable()) +
                 " Value: " + QString::number(variable->getMyVariable()->getValue()));
         i++;
-        qDebug() << i;
+//        qDebug() << i;
         Update_Ui();
     }
 }
@@ -293,20 +279,7 @@ void MainView::on_nextButton_clicked()
             outputFunction("ended");
             reloadOnEndVariables();
             nextButton->setEnabled(false);
-            QList<QLayout *> layouts = ui->code_flow_layout->findChildren<QLayout *>();
-            for( auto layout : layouts){
-                for( int i = 0; i < layout->count(); ++i) {
-                    QWidget *widget = layout->itemAt(i)->widget();
-                    if (widget != NULL)
-                    {
-                        if(auto checkbox = qobject_cast<QCheckBox*>(widget)){
-                            checkbox->setChecked(false);
-                            checkbox->setStyleSheet("QCheckBox { background-color: none }");
-                            checkbox->repaint();
-                        }
-                    }
-                }
-            }
+            clearAllDebug(false);
         } else {
             reloadOnNextVariables();
             outputFunction("stopped");
@@ -324,5 +297,17 @@ void MainView::reinterpretBreakpoints() {
             breakpoints.insert(i);
         }
         i++;
+    }
+}
+
+void MainView::clearAllDebug(bool clearFullData) {
+    QList<CommandView *> layouts = ui->code_flow_layout->findChildren<CommandView *>();
+    for (auto layout: layouts) {
+        if (clearFullData) {
+            layout->debug->setChecked(false);
+        }
+        layout->activeDebugLine->setChecked(false);
+        layout->activeDebugLine->setStyleSheet("QCheckBox { background-color: none }");
+        layout->activeDebugLine->repaint();
     }
 }

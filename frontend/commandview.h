@@ -22,15 +22,16 @@ public:
 
     bool getDebug();
 
-protected:
     QCheckBox *activeDebugLine;
-    QPushButton *deleteCommand;
     QCheckBox *debug;
+
+protected:
+    QPushButton *deleteCommand;
     Command *generatedCommand = nullptr;
 
-    std::function<void(CommandView*)> deleteFunction;
+    std::function<void(CommandView *)> deleteFunction;
 
-    static Variable *findSelectedVariable(std::vector<DynamicVariable *> *variables, const QString& selected) {
+    static Variable *findSelectedVariable(std::vector<DynamicVariable *> *variables, const QString &selected) {
         std::string sel = selected.toStdString();
         for (auto variable: *variables) {
             if (variable->getMyVariable()->getVariable() == sel) {

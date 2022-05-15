@@ -21,18 +21,18 @@ CommandView::CommandView(QWidget *parent, int lineNumber, std::function<void(Com
     this->addWidget(deleteCommand);
     this->addWidget(debug);
     generateDebugMarks = [this](const bool data) -> void {
-        if(data){
+        if (data) {
             activeDebugLine->setChecked(true);
             activeDebugLine->setStyleSheet("QCheckBox { background-color: green }");
             activeDebugLine->repaint();
         }
-        if(!data){
+        if (!data) {
             activeDebugLine->setChecked(false);
             activeDebugLine->setStyleSheet("QCheckBox { background-color: none }");
             activeDebugLine->repaint();
         }
-        qDebug() << this->lineNumber;
-        qDebug() << data;
+//        qDebug() << this->lineNumber;
+//        qDebug() << data;
     };
 }
 
