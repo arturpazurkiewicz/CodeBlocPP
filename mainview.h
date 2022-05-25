@@ -59,15 +59,20 @@ private slots:
 
     void on_nextButton_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainView *ui;
     DynamicVariable *selectedVariable;
     OutputView *outputView;
-    std::vector<DynamicVariable*> dynamicVariableList;
+    std::vector<DynamicVariable *> dynamicVariableList;
     std::vector<int> linesList;
+
     void reloadOnEndVariables();
+
     void reloadOnNextVariables();
-    std::function<void(CommandView*)> deleteFun;
+
+    std::function<void(CommandView *)> deleteFun;
     std::function<void(CommandView*)> debugFun;
     std::function<void(const std::string)> outputFunction;
     QPushButton *nextButton;

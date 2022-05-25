@@ -311,3 +311,21 @@ void MainView::clearAllDebug(bool clearFullData) {
         layout->activeDebugLine->repaint();
     }
 }
+
+void MainView::on_pushButton_clicked() {
+    if (compiler != nullptr) {
+        reinterpretBreakpoints();
+        compiler->run(true);
+        if (compiler->isEnded()) {
+            outputFunction("ended");
+            reloadOnEndVariables();
+            nextButton->setEnabled(false);
+            clearAllDebug(false);
+        } else {
+            reloadOnNextVariables();
+            outputFunction("stopped");
+            nextButton->setEnabled(true);
+        }
+    }
+}
+
