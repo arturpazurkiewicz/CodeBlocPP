@@ -78,7 +78,7 @@
        <widget class="QLabel" name="variable_label">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>0</x>
           <y>50</y>
           <width>56</width>
           <height>20</height>
@@ -126,7 +126,7 @@
        <widget class="QLineEdit" name="line_variable">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>110</x>
           <y>50</y>
           <width>113</width>
           <height>21</height>
@@ -166,6 +166,16 @@
          </rect>
         </property>
         <layout class="QVBoxLayout" name="variables_area"/>
+       </widget>
+       <widget class="QLineEdit" name="oldNameLabel">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>50</y>
+          <width>41</width>
+          <height>21</height>
+         </rect>
+        </property>
        </widget>
       </widget>
      </item>

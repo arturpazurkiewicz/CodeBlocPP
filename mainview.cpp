@@ -94,6 +94,7 @@ void MainView::on_addNewVariable_clicked() {
 void MainView::getVariableData() {
     DynamicVariable *button = (DynamicVariable *) sender();
     selectedVariable = button;
+    ui->oldNameLabel->setText(QString::fromStdString(button->getMyVariable()->getVariable()));
     ui->line_variable->setText(QString::fromStdString(button->getMyVariable()->getVariable()));
     ui->line_value->setText(QString::number(button->getMyVariable()->getStartValue()));
 }
